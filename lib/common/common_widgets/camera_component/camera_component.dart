@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-
+import 'package:flutter_boilerplate/common/theme/app_colors.dart';
 import '../../services/loggy_service.dart';
+import '../../values/global_variables.dart';
 
 
 class CameraControllerWrapper {
@@ -39,7 +39,6 @@ class CameraControllerWrapper {
 ///as provided, by its parent container widget
 class CameraComponent extends StatefulWidget {
   CameraComponent({super.key, required this.controllerWrapper});
-
   CameraControllerWrapper controllerWrapper;
 
   @override
@@ -121,7 +120,7 @@ class _CameraComponentState extends State<CameraComponent>
     } else if (state == AppLifecycleState.resumed) {
       Loggy().traceLog(
           'controllerWrapper => ${widget.controllerWrapper.isDisposed}');
-      if (await Permission.camera.isGranted) {
+      if (true/*||await Permission.camera.isGranted*/) {
         widget.controllerWrapper.reassignController();
         initializeCameraController();
       }
@@ -129,6 +128,7 @@ class _CameraComponentState extends State<CameraComponent>
   }
 
   showPermissionDialog() {
+    //navigate user to open settings and grant the permission
 /*    ShowDialog().showSimpleDialog(
       context,
       titleText: "Camera Access Denied",
@@ -164,7 +164,7 @@ class _CameraComponentState extends State<CameraComponent>
     return isInitializing
         ? Center(
             child: CircularProgressIndicator(
-              color: ThemeService().theme.colourPrimary,
+              color: AppColors().primaryColor,
             ),
           )
         : widget.controllerWrapper.cameraController != null &&

@@ -4,10 +4,10 @@ import 'package:flutter_boilerplate/common/theme/text_styles.dart';
 import 'package:flutter_boilerplate/common/theme/design_metrics.dart';
 
 //theme decoration class may contain all the decorations, text field decoration, containers decoration which will be reusable or used globally
-class Decorations {
-  static final Decorations _singleton = Decorations._internal();
-  factory Decorations() => _singleton;
-  Decorations._internal();
+class ThemeDecorations {
+  static final ThemeDecorations _singleton = ThemeDecorations._internal();
+  factory ThemeDecorations() => _singleton;
+  ThemeDecorations._internal();
 
 
   TextStyles textStyles = TextStyles();
@@ -69,10 +69,10 @@ class Decorations {
           right: suffixIcon != null ? 0 : 20),
       // contentPadding: EdgeInsets.all(5),
       errorStyle: textStyles.textFieldErrorStyle,
-      enabledBorder: Decorations().inputBorder(),
-      focusedBorder: Decorations().inputBorder(),
-      disabledBorder: Decorations().inputBorder(),
-      border: Decorations().inputBorder(),
+      enabledBorder: ThemeDecorations().inputBorder(),
+      focusedBorder: ThemeDecorations().inputBorder(),
+      disabledBorder: ThemeDecorations().inputBorder(),
+      border: ThemeDecorations().inputBorder(),
       prefixIconConstraints: const BoxConstraints(maxHeight: 25),
       suffixIconConstraints: const BoxConstraints(),
 
