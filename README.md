@@ -2,7 +2,15 @@
 
 A new Flutter project.
 
-## Getting Started
+
+# STEPS TO USER AUTO_ROUTE
+declare "@RoutePage()" above your page stateless/stateful class
+do exactly i did in router.dart and main.dart
+dart run build_runner build --delete-conflicting-outputs
+
+
+
+## Getting Started 
 
 This project is a starting point for a Flutter application.
 
