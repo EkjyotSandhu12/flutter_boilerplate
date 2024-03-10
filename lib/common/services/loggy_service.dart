@@ -20,19 +20,19 @@ class Loggy {
   }
 
   traceLog(String log, {String topic = "Trace"}) {
-    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[${topic}] ==> $log") :logger.t("[${topic}] ==> $log") ;
+    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[$topic] ==> $log") :logger.t("[${topic}] ==> $log") ;
   }
 
   debugLog(String log, {String topic = "debug"}) {
-    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[${topic}] ==> $log") :logger.d("[${topic}] ==> $log");
+    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[$topic] ==> $log") :logger.d("[${topic}] ==> $log");
   }
 
   infoLog(String log, {String topic = "info"}) {
-    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[${topic}] ==> $log") :logger.i("[${topic}] ==> $log") ;
+    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[$topic] ==> $log") :logger.i("[${topic}] ==> $log") ;
   }
 
   warningLog(String log, {String topic = "warning"}) {
-    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[${topic}] ==> $log") :logger.w("[${topic}] ==> $log") ;
+    kIsWeb ? debugPrint("[$topic] :: $log") : Platform.isIOS ? print("[$topic] ==> $log") :logger.w("[${topic}] ==> $log") ;
   }
 
   errorLog(String log, StackTrace stack, {String topic = 'ERROR'}) {

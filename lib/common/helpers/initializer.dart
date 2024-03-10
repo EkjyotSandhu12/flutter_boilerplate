@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../services/get_storage_service/get_storage_service.dart';
 import '../services/loggy_service.dart';
+import '../services/path_provider_service.dart';
 import '../values/global_variables.dart';
 
 abstract class Initializer{
@@ -27,11 +28,10 @@ abstract class Initializer{
       await FireAppCheck().initAppCheck();
       await FirebaseStorageService().initialize();*/
       await GetStorageService().initialize();
+      PathProviderService().init();
       GlobalVariables().cameras = await availableCameras();
     } catch (e, stacktrace) {
       Loggy().errorLog("initializeError=> $e", stacktrace);
     }
   }
-
-
 }

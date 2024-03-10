@@ -49,4 +49,6 @@ class TextStyles {
         fontWeight: fontWeight ?? FontWeight.normal);
     return temp;
   }
+
+
 }

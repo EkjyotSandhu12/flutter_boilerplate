@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import '../../../utils/screen_utils.dart';
+import '../services/loggy_service.dart';
+import '../utils/screen_utils.dart';
+import '../utils/utils.dart';
 
 class ValidatorConfig {
   List<ValidatorType>?
@@ -63,7 +65,7 @@ class Validator {
           }
 
           break;
-        case ValidatorType.PHONE:
+/*        case ValidatorType.PHONE: //uses PhoneNumber package
           if (value == null || value == "") {
             break;
           }
@@ -81,7 +83,7 @@ class Validator {
             Loggy().debugLog("PHONE Validation: $e");
             validationRes += " Phone number not valid.";
           }
-          break;
+          break;*/
         case ValidatorType.SAIDNUMBER:
           bool idNumberValid = true;
 
@@ -224,15 +226,8 @@ class Validator {
           if (value == null || value == "") {
             break;
           }
-          if (!ScreenUtils.isOnlyNumbers(value)) {
+          if (!Utils.isStringOnlyNumbers(value)) {
             validationRes += "This field can only contain numbers";
-          }
-          break;
-        case ValidatorType.HOMESTORE:
-          if (!(Helper()
-              .getStoresNamesList()
-              .any((element) => element == value))) {
-            validationRes += "Please select from available stores";
           }
           break;
         case ValidatorType.PASSWORD:
@@ -286,7 +281,7 @@ enum ValidatorType {
   MINLENGTH,
   MAXLENGTH,
   EMAIL,
-  PHONE,
+  // PHONE,
   DATEBEFORE,
   DATEAFTER,
   DATE,
@@ -297,5 +292,4 @@ enum ValidatorType {
   CONFRIMPASSWORD,
   PASSWORD,
   DIGIT,
-  HOMESTORE, //this will compare will complete names of home store.
 }

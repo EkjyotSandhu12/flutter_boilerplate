@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/common/route/router.gr.dart';
 import 'package:flutter_boilerplate/common/services/reponsive_framework_service.dart';
 
+//read README.md or docs
 final appRouter = AppRouter();
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {

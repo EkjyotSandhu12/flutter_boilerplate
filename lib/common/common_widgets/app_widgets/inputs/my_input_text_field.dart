@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../theme/text_styles.dart';
+import '../../../theme/theme_constants.dart';
 import '../../../utils/utils.dart';
-import 'input_validators.dart';
+import '../../../helpers/input_validators.dart';
 
 class MyInputTextField extends StatelessWidget {
   MyInputTextField(
@@ -87,21 +89,11 @@ class MyInputTextField extends StatelessWidget {
         enableInteractiveSelection: true,
         readOnly: isReadOnly,
         enabled: enabled,
-        style: ThemeConstants().textInputStyle,
+        style: TextStyles().textFieldInputText,
         maxLines: maxLines,
         minLines: minLines,
         textCapitalization: textCapitalization,
         keyboardType: inputType,
-        decoration: CustomTextStyles().textFieldInputDecoration(
-          label ?? '',
-          "",
-          isDense: true,
-          alignLabelWithHint: alignLabelWithHint,
-          hintTextAsHint: showHintText,
-          suffixIcon: suffixIcon,
-          prefix: prefix,
-          isRequired: isRequired ?? false,
-        ),
         initialValue: initialValue,
         textInputAction: textInputAction,
         inputFormatters: maskTextInputFormatter,

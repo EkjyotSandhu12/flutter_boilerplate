@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/common/route/router.gr.dart';
 
 
 class RouteService{
@@ -14,5 +15,13 @@ class RouteService{
   pop(BuildContext context, {data}) {
     return context.router.popForced(data);
   }
+
+  //==> SCREENS NAVIGATIONS
+  customerDetailsSegment1ViewNavigate(BuildContext context,
+      {Widget? customEndButton}) async {
+    return await context.router
+        .push(const Module1Route());
+  }
+
 
 }

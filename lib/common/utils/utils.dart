@@ -180,7 +180,7 @@ class Utils {
     return DateTime.now().millisecondsSinceEpoch;
   }
 
-  static bool isOnlyNumbers(String input) {
+  static bool isStringOnlyNumbers(String input) {
     final RegExp regex = RegExp(r'^\d+$');
     return regex.hasMatch(input);
   }
