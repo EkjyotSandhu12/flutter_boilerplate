@@ -1,12 +1,4 @@
-
-
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:logger/logger.dart';
-
-import '../../env.dart';
-import '../services/loggy_service.dart';
-import 'api_constants.dart';
 import 'api_interceptors.dart';
 import 'api_transformer.dart';
 

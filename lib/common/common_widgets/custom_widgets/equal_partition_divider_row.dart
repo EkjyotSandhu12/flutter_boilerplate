@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../services/loggy_service.dart';
-
 class CustomWidth {
   int indexToModify;
   double width;

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/text_styles.dart';
-
 class BoldTitleAndColumnText extends StatelessWidget {
   BoldTitleAndColumnText({
     super.key,

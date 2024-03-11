@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/utils/screen_utils.dart';
+import '../../utils/screen_utils.dart';
 
-import '../../utils/utils.dart';
 
 class NetworkImageWidget extends StatefulWidget {
   NetworkImageWidget(this.imageUrl);

@@ -1,4 +1,4 @@
-import 'package:flutter_boilerplate/common/services/screen_properties_service.dart';
+import '../services/screen_properties_service.dart';
 
 import '../theme/theme_constants.dart';
 

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_boilerplate/common/services/get_storage_service/storage_keys.dart';
+import '../../services/get_storage_service/storage_keys.dart';
 import 'package:get_secure_storage/get_secure_storage.dart';
 
 import '../loggy_service.dart';

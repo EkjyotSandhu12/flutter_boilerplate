@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../theme/theme_constants.dart';
-import 'equal_parition_divider_row.dart';
+import 'equal_partition_divider_row.dart';
 
 class CustomGap {
   int indexNo;

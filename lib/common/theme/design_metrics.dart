@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/services/screen_properties_service.dart';
-import 'package:flutter_boilerplate/common/theme/text_styles.dart';
+import '../services/screen_properties_service.dart';
 
 //This will contain all sizes, used in entire app, to make the app consistent and use same sizes all over the app
 //FONT SIZES

@@ -6,7 +6,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
-import 'package:flutter_boilerplate/common/services/path_provider_service.dart';
+import '../services/path_provider_service.dart';
 
 import 'loggy_service.dart';
 

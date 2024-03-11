@@ -1,4 +1,4 @@
-import 'package:flutter_boilerplate/common/services/loggy_service.dart';
+import '../services/loggy_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PathProviderService {

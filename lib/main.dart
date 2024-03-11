@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/theme/app_colors.dart';
+import 'common/theme/app_colors.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'common/helpers/initializer.dart';
 import 'common/route/router.dart';

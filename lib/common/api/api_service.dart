@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_boilerplate/common/constants/app_strings.dart';
+import '../constants/app_strings.dart';
 import 'package:logger/logger.dart';
 import 'package:retry/retry.dart';
 import '../../env.dart';

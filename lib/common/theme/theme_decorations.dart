@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_boilerplate/common/theme/text_styles.dart';
-import 'package:flutter_boilerplate/common/theme/design_metrics.dart';
+import 'text_styles.dart';
 
 //theme decoration class may contain all the decorations, text field decoration, containers decoration which will be reusable or used globally
 class ThemeDecorations {

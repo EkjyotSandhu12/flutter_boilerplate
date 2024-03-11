@@ -2,9 +2,9 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/route/route_middleware.dart';
-import 'package:flutter_boilerplate/common/route/router.gr.dart';
-import 'package:flutter_boilerplate/common/services/reponsive_framework_service.dart';
+import 'route_middleware.dart';
+import 'router.gr.dart';
+import '../services/reponsive_framework_service.dart';
 
 //read README.md or docs
 final appRouter = AppRouter();

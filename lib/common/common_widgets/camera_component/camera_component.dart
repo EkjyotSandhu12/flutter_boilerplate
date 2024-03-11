@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/theme/app_colors.dart';
+import '../../theme/app_colors.dart';
 import '../../services/loggy_service.dart';
 import '../../values/global_variables.dart';
 

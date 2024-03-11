@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_boilerplate/common/route/route_service.dart';
-import 'package:logger/logger.dart';
 
 import '../services/loggy_service.dart';
 import '../values/global_variables.dart';

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/utils/screen_utils.dart';
+import '../utils/screen_utils.dart';
 import 'package:intl/intl.dart';
 
 class Utils {

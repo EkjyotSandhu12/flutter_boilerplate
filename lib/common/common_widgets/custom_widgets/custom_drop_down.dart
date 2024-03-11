@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/route/route_service.dart';
-import 'package:flutter_boilerplate/common/utils/screen_utils.dart';
-
+import '../../route/route_service.dart';
+import '../../utils/screen_utils.dart';
 import '../../services/dynamic_pixel_service.dart';
 
 

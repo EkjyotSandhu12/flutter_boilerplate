@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/theme/app_colors.dart';
+import '../theme/app_colors.dart';
 
 class TextStyles {
   static final TextStyles _singleton = TextStyles._internal();

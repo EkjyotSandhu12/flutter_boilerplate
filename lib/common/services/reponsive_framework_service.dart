@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/theme/theme_constants.dart';
+import '../theme/theme_constants.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../theme/design_metrics.dart';
