@@ -26,7 +26,7 @@ class InitMaterialApp extends StatelessWidget {
           ),
           child: ValueListenableBuilder(
             valueListenable: AppColors().isDarkTheme,
-            builder: (BuildContext context, bool value, Widget? child) =>
+            builder: (BuildContext context, bool value, Widget? c) =>
                 child!,
           ),
         ),
