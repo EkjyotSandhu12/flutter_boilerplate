@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/common/route/route_middleware.dart';
 import 'package:flutter_boilerplate/common/route/router.gr.dart';
 import 'package:flutter_boilerplate/common/services/reponsive_framework_service.dart';
 
@@ -32,6 +33,9 @@ class AppRouter extends $AppRouter {
   CustomRoute customRoute<T>(
       {required PageInfo<dynamic> page, bool initial = false}) =>
       CustomRoute(
+        guards: [
+          AuthGuard(),
+        ],
         customRouteBuilder: playRouteBuilder,
         initial: initial,
         page: page,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/strings_constants.dart';
+import '../constants/app_strings.dart';
 import '../services/loggy_service.dart';
 
 class Handler extends WidgetsBindingObserver {
@@ -8,16 +8,16 @@ class Handler extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      myLog.traceLog("${Strings.appName} RESUMED");
+      myLog.traceLog("${AppStrings.appName} RESUMED");
     }
     if (state == AppLifecycleState.inactive) {
-      myLog.traceLog("${Strings.appName} INACTIVE");
+      myLog.traceLog("${AppStrings.appName} INACTIVE");
     }
     if (state == AppLifecycleState.paused) {
-      myLog.traceLog("${Strings.appName} PAUSED");
+      myLog.traceLog("${AppStrings.appName} PAUSED");
     }
     if (state == AppLifecycleState.detached) {
-      myLog.traceLog("${Strings.appName} DETACHED");
+      myLog.traceLog("${AppStrings.appName} DETACHED");
     }
   }
 }

@@ -6,7 +6,7 @@ class GlobalVariables{
   List<CameraDescription> cameras = [];
 
 
-  //String userToken = '';
+  String authToken = '';
   //String userName = '';
 
 }

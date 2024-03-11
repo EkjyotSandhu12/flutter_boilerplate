@@ -1,25 +1,46 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_boilerplate/common/route/route_service.dart';
 import 'package:logger/logger.dart';
 
+import '../services/loggy_service.dart';
+import '../values/global_variables.dart';
+
 class ApiInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    String authToken = GlobalVariables().authToken;
+    if (authToken.isNotEmpty) {
+      options.headers["authorization"] = 'Bearer $authToken';
+      options.headers["Content-Type"] = "application/json";
+    }
+
+    Loggy().infoLog(
+        "URL: ${options.path},\nBody: ${options.data}  \n Headers: ${options.headers}",
+        topic: "HTTP REQUEST");
+
+    super.onRequest(options, handler);
+  }
 
   @override
-  void onError(DioException error, ErrorInterceptorHandler handler) {
-    @override
-    void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-      print('REQUEST[${options.method}] => PATH: ${options.path}');
-      super.onRequest(options, handler);
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    Loggy().warningLog(
+        "STATUS-CODE[${response.statusCode}] URL: ${response.requestOptions.path},\nBody: ${response.data} ",
+        topic: "HTTP RESPONSE");
+
+    if(response.statusCode == 401 || response.statusCode == 403){
+      // RouteService().loginNavigate();
     }
 
-    @override
-    void onResponse(Response response, ResponseInterceptorHandler handler) {
-      print('RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-      super.onResponse(response, handler);
-    }
+    super.onResponse(response, handler);
+  }
 
-    @override
-    Future onError(DioException err, ErrorInterceptorHandler handler) async {
-      print('ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
-      super.onError(err, handler);
-    }
+  @override
+  Future onError(DioException err, ErrorInterceptorHandler handler) async {
+    Loggy().errorLog(
+        "STATUS-CODE[${err.response?.statusCode}] URL: ${err.requestOptions.path}",
+        topic: "REQUEST ERROR",
+        StackTrace.current);
+
+    super.onError(err, handler);
+  }
 }
