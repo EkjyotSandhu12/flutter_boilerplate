@@ -33,7 +33,7 @@ class Validator {
       switch (validation) {
         case ValidatorType.EMPTY:
           if (value == null) {
-            Loggy().infoLog("Value is null");
+            myLog.infoLog("Value is null");
             validationRes += "This field c  annot be empty.";
           } else if (value!.trim().isEmpty) {
             validationRes += "This field cannot be empty.";
@@ -74,13 +74,13 @@ class Validator {
               final phone = PhoneNumber.parse(value.trim(),
                   destinationCountry: IsoCode.ZA);
 
-              Loggy().traceLog('phone $phone');
+              myLog.traceLog('phone $phone');
               if (!phone.isValid()) {
                 validationRes += " Phone number not valid.";
               }
             }
           } catch (e) {
-            Loggy().debugLog("PHONE Validation: $e");
+            myLog.debugLog("PHONE Validation: $e");
             validationRes += " Phone number not valid.";
           }
           break;*/
@@ -123,7 +123,7 @@ class Validator {
                 validationRes += " Date cannot be after current date.";
               }
             } catch (e) {
-              Loggy().debugLog("$e");
+              myLog.debugLog("$e");
               validationRes += " Invalid Date.";
             }
           }
@@ -214,7 +214,7 @@ class Validator {
           }
           break;
         case ValidatorType.CONFRIMPASSWORD:
-          Loggy().debugLog(
+          myLog.debugLog(
               "Validate Confirm Password. Password: ${validatorConfig.data} confirm: $value");
           if ((value != validatorConfig.data) ||
               value!.isEmpty ||

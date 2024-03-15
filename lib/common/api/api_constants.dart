@@ -1,14 +1,4 @@
 
-enum MethodType {
-  get('GET'),
-  post('POST'),
-  put('PUT'),
-  patch('PATCH'),
-  delete("DELETE");
-  const MethodType(this.type);
-  final String type;
-}
-
 abstract class ApiConstants{
 
   ///==> BASE URL
@@ -19,4 +9,5 @@ abstract class ApiConstants{
 
   ///==> END POINTS
   static String getUser = '/users';
+
 }

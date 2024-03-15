@@ -35,10 +35,10 @@ class FileService{
       File file = await File(
           '$appDocumentsDirPath/${DateTime.now().microsecondsSinceEpoch}.png')
           .writeAsBytes(bytes, mode: FileMode.writeOnly);
-      Loggy().infoLog(file.path, topic: 'Files Saved To');
+      myLog.infoLog(file.path, topic: 'Files Saved To');
       return file.path;
     } on Exception catch (e) {
-      Loggy().errorLog(
+      myLog.errorLog(
           'Unable to save file in application directory', StackTrace.current);
       return null;
     }
@@ -46,11 +46,11 @@ class FileService{
 
 
   Future deleteFile(String filePath) async {
-    Loggy().infoLog('$filePath', topic: 'deleteFile');
+    myLog.infoLog('$filePath', topic: 'deleteFile');
     try {
       await File(filePath).delete();
     }  catch (e) {
-      Loggy().warningLog('$e :: Path > $filePath', topic: 'Failed To Delete File');
+      myLog.warningLog('$e :: Path > $filePath', topic: 'Failed To Delete File');
     }
   }
 

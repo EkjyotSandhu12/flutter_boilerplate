@@ -16,7 +16,7 @@ class CameraControllerWrapper {
   }
 
   assignCameraController() {
-    Loggy().traceLog('assignCameraController executed');
+    myLog.traceLog('assignCameraController executed');
     isDisposed = false;
     if (GlobalVariables().cameras.isNotEmpty) {
       cameraController = CameraController(
@@ -61,7 +61,7 @@ class _CameraComponentState extends State<CameraComponent>
   }
 
   Future<XFile?> captureImage() async {
-    Loggy().infoLog("Captured Image", topic: "CameraPage");
+    myLog.infoLog("Captured Image", topic: "CameraPage");
     if (!widget.controllerWrapper.cameraController!.value.isInitialized)
       return null;
     try {
@@ -69,7 +69,7 @@ class _CameraComponentState extends State<CameraComponent>
           await widget.controllerWrapper.cameraController!.takePicture();
       return file;
     } catch (e, stacktrace) {
-      Loggy().errorLog("Unable to capture image :: $e", stacktrace);
+      myLog.errorLog("Unable to capture image :: $e", stacktrace);
       return null;
     }
   }
@@ -109,7 +109,7 @@ class _CameraComponentState extends State<CameraComponent>
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     // App state changed before we got the chance to initialize.
-    Loggy().traceLog("didChangeAppLifecycleState $state");
+    myLog.traceLog("didChangeAppLifecycleState $state");
 
     if (!widget.controllerWrapper.cameraController!.value.isInitialized) {
       return;
@@ -118,7 +118,7 @@ class _CameraComponentState extends State<CameraComponent>
     if (state == AppLifecycleState.inactive) {
       widget.controllerWrapper.disposeController();
     } else if (state == AppLifecycleState.resumed) {
-      Loggy().traceLog(
+      myLog.traceLog(
           'controllerWrapper => ${widget.controllerWrapper.isDisposed}');
       if (true/*||await Permission.camera.isGranted*/) {
         widget.controllerWrapper.reassignController();
@@ -160,7 +160,7 @@ class _CameraComponentState extends State<CameraComponent>
 
   @override
   Widget build(BuildContext context) {
-    Loggy().traceLog('isCapturing $isInitializing');
+    myLog.traceLog('isCapturing $isInitializing');
     return isInitializing
         ? Center(
             child: CircularProgressIndicator(

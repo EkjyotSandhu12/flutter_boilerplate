@@ -7,8 +7,21 @@ import 'package:retry/retry.dart';
 import '../../env.dart';
 import '../helpers/exceptions.dart';
 import '../services/loggy_service.dart';
+import 'api_cancel_token_manager.dart';
 import 'api_constants.dart';
 import 'dio_client.dart';
+
+enum MethodType {
+  get('GET'),
+  post('POST'),
+  put('PUT'),
+  patch('PATCH'),
+  delete("DELETE");
+
+  const MethodType(this.type);
+
+  final String type;
+}
 
 class ApiService {
   static final ApiService _singleton = ApiService._internal();
@@ -22,25 +35,34 @@ class ApiService {
       required String endPoint,
       Map<String, dynamic>? data,
       Map<String, dynamic>? header}) async {
+
+    ApiCancelTokenManager apiCancelRequestManager = ApiCancelTokenManager();
+    CancelToken cancelToken = apiCancelRequestManager.createToken(endPoint);
+    late Response response;
     try {
-      Response response = await retry(
+       response = await retry(
         maxAttempts: 3,
         () async => await DioClient().dio.request(
-              getURL(endPoint),
+               cancelToken: cancelToken,
+              _getURL(endPoint),
               data: data,
               options: Options(method: method.type, headers: header),
             ),
         // Retry on SocketException or TimeoutException
-        retryIf: (e) => e is DioException,
+        retryIf: (e) => e is DioException && (e.type != DioExceptionType.cancel && e.type != DioExceptionType.badResponse),
       );
-
+      apiCancelRequestManager.removeTokenFromMap(endPoint, cancelToken);
       if (response.statusCode == 200) {
         return jsonDecode(response.data);
       } else {
         _errorOrInvalidTokenHandler(response: response);
       }
     } catch (e) {
-      rethrow;
+      try {
+        _errorOrInvalidTokenHandler(response: response);
+      } catch (e) {
+       rethrow;
+      }
     }
   }
 
@@ -50,8 +72,8 @@ class ApiService {
 
   _errorOrInvalidTokenHandler({
     required Response response,
-  }) async {
-    Loggy().warningLog("${response.statusCode}",
+  }) {
+    myLog.warningLog("${response.statusCode}",
         topic: "errorOrInvalidTokenHandler");
 
     if ((response.statusCode == 403 || response.statusCode == 401) &&
@@ -63,29 +85,29 @@ class ApiService {
   }
 
   /// Returns full api url(Uri) using the Environment Variable
-  String getURL(String endPoint) {
+  String _getURL(String endPoint) {
     if (kReleaseMode) {
       Env envVar = ENV().currentEnv;
       switch (envVar) {
         case Env.production:
-          Loggy().infoLog('PROD mode', topic: "Environment Mode");
-          Loggy().setLogLevel(Level.error);
+          myLog.infoLog('PROD mode', topic: "Environment Mode");
+          myLog.setLogLevel(Level.error);
           return "${ApiConstants.prod}$endPoint";
         case Env.staging:
-          Loggy().infoLog('STAGING mode', topic: "Environment Mode");
-          Loggy().setLogLevel(Level.warning);
+          myLog.infoLog('STAGING mode', topic: "Environment Mode");
+          myLog.setLogLevel(Level.warning);
           return ("${ApiConstants.staging}$endPoint");
         case Env.local:
-          Loggy().infoLog('LOCAL mode', topic: "Environment Mode");
-          Loggy().setLogLevel(Level.all);
+          myLog.infoLog('LOCAL mode', topic: "Environment Mode");
+          myLog.setLogLevel(Level.all);
           return ("${ApiConstants.local}$endPoint");
         default:
-          Loggy().infoLog('LOCAL mode', topic: "Environment Mode");
-          Loggy().setLogLevel(Level.all);
+          myLog.infoLog('LOCAL mode', topic: "Environment Mode");
+          myLog.setLogLevel(Level.all);
           return ("${ApiConstants.local}$endPoint");
       }
     } else {
-      Loggy().infoLog('debug mode', topic: "Environment Mode");
+      myLog.infoLog('debug mode', topic: "Environment Mode");
       Loggy().setLogLevel(Level.all);
       return "${ApiConstants.local}$endPoint";
     }

@@ -36,7 +36,7 @@ class _OTPFieldState extends State<OTPField> {
   String getEnteredValues() {
     String otpString = '';
     _controllers.forEach((controller) => otpString += controller.text);
-    Loggy().infoLog("OTP STRING => $otpString", topic: "getEnteredValues");
+    myLog.infoLog("OTP STRING => $otpString", topic: "getEnteredValues");
     return otpString.trim();
   }
 

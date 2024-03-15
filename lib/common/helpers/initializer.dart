@@ -31,7 +31,7 @@ abstract class Initializer{
       PathProviderService().init();
       GlobalVariables().cameras = await availableCameras();
     } catch (e, stacktrace) {
-      Loggy().errorLog("initializeError=> $e", stacktrace);
+      myLog.errorLog("initializeError=> $e", stacktrace);
     }
   }
 }

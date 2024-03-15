@@ -23,9 +23,9 @@ class GetStorageService {
   Future<bool> removeKey(String key) async {
     try {
       await box.remove(key);
-      Loggy().infoLog('${key} ', topic: 'removeKey');
+      myLog.infoLog('${key} ', topic: 'removeKey');
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -35,7 +35,7 @@ class GetStorageService {
     try {
       await writeData(key, jsonEncode(map));
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -48,7 +48,7 @@ class GetStorageService {
         return jsonDecode(result);
       }
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return null;
     }
     return null;
@@ -59,7 +59,7 @@ class GetStorageService {
     try {
       await writeData(key, jsonEncode(myMap));
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -72,7 +72,7 @@ class GetStorageService {
         return jsonDecode(result)[key];
       }
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return null;
     }
     return null;
@@ -82,7 +82,7 @@ class GetStorageService {
     try {
       await writeData(key, value);
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -92,7 +92,7 @@ class GetStorageService {
     try {
       return await readData(key);
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return null;
     }
   }
@@ -102,7 +102,7 @@ class GetStorageService {
     try {
       await writeData(key, v);
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -116,7 +116,7 @@ class GetStorageService {
       }
       return null;
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return null;
     }
   }
@@ -125,7 +125,7 @@ class GetStorageService {
     try {
       await writeData(key, value.toString());
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -138,7 +138,7 @@ class GetStorageService {
         return int.parse(value);
       }
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return null;
     }
     return null;
@@ -148,7 +148,7 @@ class GetStorageService {
     try {
       await box.erase();
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -158,7 +158,7 @@ class GetStorageService {
     try {
       await writeData(StorageKeys.refreshToken, token);
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return false;
     }
     return true;
@@ -172,7 +172,7 @@ class GetStorageService {
           )) ??
           '';
     } catch (e, stack) {
-      Loggy().errorLog(e.toString(), stack);
+      myLog.errorLog(e.toString(), stack);
       return value;
     }
     return value;
@@ -181,7 +181,7 @@ class GetStorageService {
   readData(String key) async {
     try {
       var dataRead = await box.read(key);
-      Loggy().infoLog('Key:: $key \nData :: $dataRead', topic: 'dataRead');
+      myLog.infoLog('Key:: $key \nData :: $dataRead', topic: 'dataRead');
       return dataRead;
     } on Exception catch (e) {
       rethrow;
@@ -191,7 +191,7 @@ class GetStorageService {
   writeData(String key, dynamic data) async {
     try {
       await box.write(key, data);
-      Loggy().infoLog('Key:: $key \nData:: $data', topic: 'dataWrite');
+      myLog.infoLog('Key:: $key \nData:: $data', topic: 'dataWrite');
     } on Exception catch (e) {
       rethrow;
     }

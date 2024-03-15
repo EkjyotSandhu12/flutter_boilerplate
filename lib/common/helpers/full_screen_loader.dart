@@ -9,12 +9,12 @@ class LoadingIndicatorNotifier with ChangeNotifier {
 LoadingIndicatorNotifier loadingIndicatorNotifier = LoadingIndicatorNotifier();
 
 showLoadingIndicator() {
-  Loggy().infoLog("ENABLED", topic: "LoadingIndicator");
+  myLog.infoLog("ENABLED", topic: "LoadingIndicator");
   loadingIndicatorNotifier.update.value = true;
 }
 
 hideLoadingIndicator() {
-  Loggy().infoLog("DISABLED", topic: "LoadingIndicator");
+  myLog.infoLog("DISABLED", topic: "LoadingIndicator");
   loadingIndicatorNotifier.update.value = false;
 }
 

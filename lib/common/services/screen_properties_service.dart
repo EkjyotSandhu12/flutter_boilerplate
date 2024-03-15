@@ -19,7 +19,7 @@ class ScreenPropertiesService {
     currentOrientation = mQD.orientation;
     screenHeight = mQD.size.height;
     screenWidth = mQD.size.width;
-/*    Loggy().traceLog("height:: $screenHeight", topic: "ScreenUpdated");
-    Loggy().traceLog("width:: $screenWidth", topic: "ScreenUpdated");*/
+/*    myLog.traceLog("height:: $screenHeight", topic: "ScreenUpdated");
+    myLog.traceLog("width:: $screenWidth", topic: "ScreenUpdated");*/
   }
 }

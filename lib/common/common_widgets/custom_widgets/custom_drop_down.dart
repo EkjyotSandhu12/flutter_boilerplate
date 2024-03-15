@@ -20,10 +20,10 @@ enum DropDownDirection {
     double widgetWidth = dWidth(box.size.width); //width of the dropdown icon
     width = dWidth(width); //the width of the dropDown Menu
 
-    // Loggy().traceLog("getOffset ${name}");
-    // Loggy().traceLog("widgetHeight ${widgetHeight}");
-    // Loggy().traceLog("width ${width}");
-    // Loggy().traceLog("widgetWidth ${widgetWidth}");
+    // myLog.traceLog("getOffset ${name}");
+    // myLog.traceLog("widgetHeight ${widgetHeight}");
+    // myLog.traceLog("width ${width}");
+    // myLog.traceLog("widgetWidth ${widgetWidth}");
 
     switch (name) {
       case "topLeftToTopRight":
@@ -76,10 +76,10 @@ showDropDownBelowWidget(
     offset = dropDownDirection.getOffset(box: box, width: width, context: context);
   }
 
-  // Loggy().traceLog("View padding Top ${Utils.viewPaddingTop(context)}");
-  // Loggy().traceLog("View padding Bottom ${Utils.viewPaddingBottom(context)}");
-  // Loggy().traceLog("View padding left ${Utils.viewPaddingLeft(context)}");
-  // Loggy().traceLog("View padding right ${Utils.viewPaddingRight(context)}");
+  // myLog.traceLog("View padding Top ${Utils.viewPaddingTop(context)}");
+  // myLog.traceLog("View padding Bottom ${Utils.viewPaddingBottom(context)}");
+  // myLog.traceLog("View padding left ${Utils.viewPaddingLeft(context)}");
+  // myLog.traceLog("View padding right ${Utils.viewPaddingRight(context)}");
 
 
   // offset += addOffset!;

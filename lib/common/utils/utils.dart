@@ -33,7 +33,7 @@ class Utils {
   }
 
   static hideKeyboard() {
-    // Loggy().traceLog("KeyBoard Hide", topic: "hideKeyboard");
+    // myLog.traceLog("KeyBoard Hide", topic: "hideKeyboard");
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
