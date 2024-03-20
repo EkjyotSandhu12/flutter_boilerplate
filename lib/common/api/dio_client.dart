@@ -21,6 +21,4 @@ class DioClient{
 
   static Duration timeOut = const Duration(seconds: 60);
 
-
-
 }
