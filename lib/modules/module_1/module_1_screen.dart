@@ -18,7 +18,7 @@ class Module1Screen extends StatelessWidget {
             try {
               await ApiService()
                   .requestApi(method: MethodType.post, endPoint: '', data: {
-                'responseCode': 202,
+                'responseCode': 403,
                 'errorMessage': {'test': 'test'},
                 'encode': false,
               });
