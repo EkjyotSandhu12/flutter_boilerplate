@@ -67,12 +67,15 @@ class ApiService {
   }
 
   _errorMessageHandler({error}) {
+    String errorMessage;
     if (error is DioException) {
-      return NetworkErrorMessageHelper()
+      errorMessage = NetworkErrorMessageHelper()
           .dioExceptionStatusMessage(error.type, error.response?.statusCode);
     } else {
-      return "$error";
+      errorMessage = "$error";
     }
+    myLog.errorLog('${errorMessage}', StackTrace.current,
+        topic: '_errorMessageHandler');
   }
 
   /// Returns full api url(Uri) using the Environment Variable
