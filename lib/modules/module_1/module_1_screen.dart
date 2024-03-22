@@ -12,23 +12,23 @@ class Module1Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: ElevatedButton(onPressed: () async {
-
-        try {
-         await ApiService().requestApi(method: MethodType.post,
-              endPoint: '', data: {
-                'responseCode': 403,
-                'errorMessage': {'test':'test'},
-                'encode':false,
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            try {
+              await ApiService()
+                  .requestApi(method: MethodType.post, endPoint: '', data: {
+                'responseCode': 202,
+                'errorMessage': {'test': 'test'},
+                'encode': false,
               });
-        }  on NetworkException catch (e)  {
-          myLog.traceLog('${e.message}');
-        }
-
-
-      },
-        child: Text('Api Error Call'),
-      ),),
+            } catch (e) {
+              myLog.traceLog('${e}');
+            }
+          },
+          child: Text('Api Error Call'),
+        ),
+      ),
     );
   }
 }
