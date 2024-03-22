@@ -63,22 +63,88 @@ class ApiService {
           ? jsonDecode(response.data)
           : response.data;
     } catch (e) {
-      throw _errorHandler(error: e);
+      throw _errorMessageHandler(error: e);
     }
   }
 
-
-
-  _errorHandler({error}) {
+  _errorMessageHandler({error}) {
     if (error is DioException) {
-     return NetworkException.fromDioException(error);
+      return dioExceptionStatusMessage(error.type, error.response?.statusCode);
     } else {
       return NetworkException(message: error.toString());
     }
   }
 
 
+  dioExceptionStatusMessage(
+      DioExceptionType dioExceptionType, int? statusCode) {
+    switch (dioExceptionType) {
+      case DioExceptionType.cancel:
+        return 'STATUS CODE : $statusCode :: Connection was cancelled';
+      case DioExceptionType.connectionTimeout:
+        return 'STATUS CODE : $statusCode :: Connection not established, connectionTimeout';
+      case DioExceptionType.sendTimeout:
+        return 'STATUS CODE : $statusCode :: Failed to send, sendTimeout';
+      case DioExceptionType.receiveTimeout:
+        return 'STATUS CODE : $statusCode :: Failed to receive, receiveTimeout';
+      case DioExceptionType.badCertificate:
+        return 'STATUS CODE : $statusCode :: Caused by an incorrect certificate';
+      case DioExceptionType.connectionError:
+        return 'STATUS CODE : $statusCode :: Caused by an incorrect certificate';
+      case DioExceptionType.badResponse:
+        return 'STATUS CODE : $statusCode :: Caused by an incorrect certificate';
+      default:
+        return statusErrorMessage(statusCode);
+    }
+  }
 
+
+  String statusErrorMessage(int? statusCode) {
+      switch (statusCode) {
+        case 400:
+          return "STATUS CODE : $statusCode | Bad Request: The server could not understand the request due to invalid syntax.";
+        case 401:
+          return "STATUS CODE : $statusCode | Unauthorized: The user must authenticate itself to get the requested response.";
+        case 403:
+          return "STATUS CODE : $statusCode | Forbidden: The user does not have access rights to the content.";
+        case 404:
+          return "STATUS CODE : $statusCode | Not Found: Can not find the requested resource.";
+        case 405:
+          return "STATUS CODE : $statusCode | Method Not Allowed: The method specified in the request is not allowed for the resource.";
+        case 408:
+          return "STATUS CODE : $statusCode | Request Timeout: The server timed out waiting for the request.";
+        case 429:
+          return "STATUS CODE : $statusCode | Too Many Requests: The user has sent too many requests in a given amount of time.";
+        case 500:
+          return "STATUS CODE : $statusCode | Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.";
+        case 502:
+          return "STATUS CODE : $statusCode | Bad Gateway: The server received an invalid response from the upstream server while trying to fulfill the request.";
+        case 503:
+          return "STATUS CODE : $statusCode | Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server.";
+        case 504:
+          return "STATUS CODE : $statusCode | Gateway Timeout: The server did not receive a timely response from the upstream server.";
+        case 408:
+          return "STATUS CODE : $statusCode | Request Timeout: The server timed out waiting for the request.";
+        case 413:
+          return "STATUS CODE : $statusCode | Payload Too Large: The request is larger than the server is willing or able to process.";
+        case 414:
+          return "STATUS CODE : $statusCode | URI Too Long: The URI provided was too long for the server to process.";
+        case 415:
+          return "STATUS CODE : $statusCode | Unsupported Media Type: The server does not support the media type that the request was made with.";
+        case 500:
+          return "STATUS CODE : $statusCode | Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.";
+        case 501:
+          return "STATUS CODE : $statusCode | Not Implemented: The server either does not recognize the request method, or it lacks the ability to fulfill the request.";
+        case 502:
+          return "STATUS CODE : $statusCode | Bad Gateway: The server received an invalid response from the upstream server while trying to fulfill the request.";
+        case 503:
+          return "STATUS CODE : $statusCode | Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server.";
+        case 504:
+          return "STATUS CODE : $statusCode | Gateway Timeout: The server did not receive a timely response from the upstream server.";
+        default:
+          return "STATUS CODE : $statusCode | Unknown Error: The server returned an unexpected status code or error.";
+      }
+    }
 
   /// Returns full api url(Uri) using the Environment Variable
   String _getURL(String endPoint) {
@@ -108,4 +174,6 @@ class ApiService {
       return "${ApiConstants.local}$endPoint";
     }
   }
+
+
 }
