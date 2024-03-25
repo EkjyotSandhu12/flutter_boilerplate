@@ -1,6 +1,8 @@
 # flutter_boilerplate
-
-A new Flutter project.
+-> add string types comments in app_strings
+-> preconfigure basic ui for snackbar and dialog box 
+-> setup color/showdialog files
+-> add permission handler
 
 
 # STEPS TO USER AUTO_ROUTE
