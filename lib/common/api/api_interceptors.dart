@@ -14,8 +14,8 @@ class ApiInterceptor extends Interceptor {
       options.headers["Content-Type"] = "application/json";
     }
 
-    myLog.infoLog("URL: ${options.path},\nBody: ${options.data}  \n Headers: ${options.headers}",
-        topic: "HTTP REQUEST");
+    myLog.infoLog("URL: ${options.path}, \nBody: ${options.data}  \n Headers: ${options.headers}",
+        topic: "HTTP OnREQUEST");
 
     super.onRequest(options, handler);
   }
@@ -24,7 +24,7 @@ class ApiInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     myLog.infoLog(
         "STATUS-CODE[${response.statusCode}] URL: ${response.requestOptions.path},\nBody: ${response.data} ",
-        topic: "HTTP RESPONSE");
+        topic: "HTTP OnRESPONSE");
 
     if(response.statusCode == 401 || response.statusCode == 403){
       ApiCancelTokenManager().cancelAllRequests();
@@ -38,7 +38,7 @@ class ApiInterceptor extends Interceptor {
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
     myLog.errorLog(
         "STATUS-CODE[${err.response?.statusCode}] URL: ${err.requestOptions.path}",
-        topic: "REQUEST ERROR",
+        topic: "API OnERROR",
         StackTrace.current);
 
     super.onError(err, handler);

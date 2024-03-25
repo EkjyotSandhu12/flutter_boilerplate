@@ -1,8 +1,9 @@
 import 'dart:convert';
 import '../../services/get_storage_service/storage_keys.dart';
 import 'package:get_secure_storage/get_secure_storage.dart';
-
 import '../loggy_service.dart';
+
+enum SaveDataType { map, int, string, list, bool }
 
 class GetStorageService {
   static final GetStorageService _singleton = GetStorageService._internal();
@@ -31,116 +32,155 @@ class GetStorageService {
     return true;
   }
 
-  Future<bool> writeMap(String key, Map map) async {
+  _readData(String key) async {
     try {
-      await writeData(key, jsonEncode(map));
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return false;
+      var dataRead = await box.read(key);
+      myLog.infoLog('Key:: $key \nData :: $dataRead', topic: 'dataRead');
+      return dataRead;
+    } on Exception catch (e) {
+      rethrow;
     }
-    return true;
   }
 
-  Future<Map?> readMap(String key) async {
+  _writeData(String key, dynamic data) async {
     try {
-      String? result = await readData(key);
-      if (result != null) {
-        return jsonDecode(result);
+      await box.write(key, data);
+      myLog.infoLog('Key:: $key \nData:: $data', topic: 'dataWrite');
+    } on Exception catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> write(
+      {required dynamic data,
+      required String key,
+      required SaveDataType saveDataType}) async {
+    try {
+      switch (saveDataType) {
+        case SaveDataType.map:
+          if (data is Map) {
+            await _writeData(key, jsonEncode(data));
+            return true;
+          } else {
+            myLog.errorLog(
+                'data is the type of ${data.runtimeType} || needed => MAP',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.string:
+          if (data is String) {
+            await _writeData(key, data);
+            return true;
+          } else {
+            myLog.errorLog(
+                'data is the type of ${data.runtimeType} || needed => STRING',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.bool:
+          if (data is bool) {
+            int v = data ? 1 : 0;
+            await _writeData(key, v);
+            return true;
+          } else {
+            myLog.errorLog(
+                'data is the type of ${data.runtimeType} || needed => BOOL',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.int:
+          if (data is int) {
+            await _writeData(key, data);
+            return true;
+          } else {
+            myLog.errorLog(
+                'data is the type of ${data.runtimeType} || needed => INT',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.list:
+          //list can contain of type STRING,INT,MAP,DOUBLE,BOOLEAN
+          if (data is List) {
+            Map myMap = {key: data};
+            await _writeData(key, jsonEncode(myMap));
+            break;
+          } else {
+            myLog.errorLog(
+                'data is the type of ${data.runtimeType} || needed => LIST',
+                StackTrace.current);
+          }
+          break;
+        default:
+          myLog.errorLog('SaveDataType was not mentioned', StackTrace.current);
+          break;
       }
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return null;
-    }
-    return null;
-  }
-
-  Future<bool> writeList(String key, List values) async {
-    Map myMap = {key: values};
-    try {
-      await writeData(key, jsonEncode(myMap));
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
+    } catch (e) {
+      myLog.errorLog(e.toString(), StackTrace.current);
       return false;
     }
-    return true;
+    myLog.errorLog('Something went wrong', StackTrace.current);
+    return false;
   }
 
-  Future<List?> readList(String key) async {
+  Future? read(
+      {required String key, required SaveDataType saveDataType}) async {
+    dynamic result = await _readData(key);
     try {
-      String? result = await readData(key);
-      if (result != null) {
-        return jsonDecode(result)[key];
+      switch (saveDataType) {
+        case SaveDataType.map:
+          if (result is String) {
+            return jsonDecode(result);
+          } else {
+            myLog.errorLog(
+                'fetched data was type of ${result.runtimeType} || needed => STRING',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.string:
+          if (result is String) {
+            return result;
+          } else {
+            myLog.errorLog(
+                'fetched data was type of ${result.runtimeType} || needed => STRING',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.bool:
+          if (result is int) {
+            return result == 1 ? true : false;
+          } else {
+            myLog.errorLog(
+                'fetched data was type of ${result.runtimeType} || needed => INT',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.int:
+          if (result is int) {
+            return result;
+          } else {
+            myLog.errorLog(
+                'fetched data was type of ${result.runtimeType} || needed => INT',
+                StackTrace.current);
+          }
+          break;
+        case SaveDataType.list:
+          //list can contain of type STRING,INT,MAP,DOUBLE,BOOLEAN
+          if (result is String) {
+            return jsonDecode(result)[key];
+          } else {
+            myLog.errorLog(
+                'fetched data was type of ${result.runtimeType} || needed => STRING',
+                StackTrace.current);
+          }
+          break;
+        default:
+          myLog.errorLog('SaveDataType was not mentioned', StackTrace.current);
       }
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
+    } catch (e) {
+      myLog.errorLog(e.toString(), StackTrace.current);
       return null;
     }
-    return null;
-  }
-
-  Future<bool> writeString(String key, String value) async {
-    try {
-      await writeData(key, value);
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return false;
-    }
-    return true;
-  }
-
-  Future<String?> readString(String key) async {
-    try {
-      return await readData(key);
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return null;
-    }
-  }
-
-  Future<bool> writeBool(String key, bool value) async {
-    int v = value ? 1 : 0;
-    try {
-      await writeData(key, v);
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return false;
-    }
-    return true;
-  }
-
-  Future<bool?> readBool(String key) async {
-    try {
-      int? v = await readData(key);
-      if (v != null) {
-        return v == 1 ? true : false;
-      }
-      return null;
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return null;
-    }
-  }
-
-  Future<bool> writeInt(String key, int value) async {
-    try {
-      await writeData(key, value.toString());
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return false;
-    }
-    return true;
-  }
-
-  Future<int?> readInt(String key) async {
-    try {
-      String? value = await readData(key);
-      if (value != null) {
-        return int.parse(value);
-      }
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return null;
-    }
+    myLog.errorLog('Something went wrong', StackTrace.current);
     return null;
   }
 
@@ -152,48 +192,5 @@ class GetStorageService {
       return false;
     }
     return true;
-  }
-
-  Future<bool> setRefreshToken(String token) async {
-    try {
-      await writeData(StorageKeys.refreshToken, token);
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return false;
-    }
-    return true;
-  }
-
-  Future<String> getRefreshToken() async {
-    String value = '';
-    try {
-      value = (await readString(
-            StorageKeys.refreshToken,
-          )) ??
-          '';
-    } catch (e, stack) {
-      myLog.errorLog(e.toString(), stack);
-      return value;
-    }
-    return value;
-  }
-
-  readData(String key) async {
-    try {
-      var dataRead = await box.read(key);
-      myLog.infoLog('Key:: $key \nData :: $dataRead', topic: 'dataRead');
-      return dataRead;
-    } on Exception catch (e) {
-      rethrow;
-    }
-  }
-
-  writeData(String key, dynamic data) async {
-    try {
-      await box.write(key, data);
-      myLog.infoLog('Key:: $key \nData:: $data', topic: 'dataWrite');
-    } on Exception catch (e) {
-      rethrow;
-    }
   }
 }
