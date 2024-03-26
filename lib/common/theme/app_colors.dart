@@ -7,19 +7,48 @@ class AppColors{
   AppColors._internal();
 
   ///=> Getter methods to fetch colors based on theme
-  Color get primaryColor => isDarkTheme.value ? _primaryColorDark : _primaryColorLight;
-  Color get accentColor => isDarkTheme.value ? _accentColorDark : _accentColorLight;
-  Color get textColor => isDarkTheme.value ? _textColorDark : _textColorLight;
+  //others
+  Color get getErrorColor => errorColor;
+
+
+  //buttons
+  Color get getButtonBackgroundColor => primaryColorLight;
+  Color get getButtonTextColour => onPrimary;
+
+  //text field
+  Color get getCursorColor => onPrimary;
+  Color get getTextFieldBackgroundColor => accentColor;
+  Color get getTextInputColor => textColorLight;
+
+  //background colors
+  Color get getTileBackgroundColor => backgroundColor;
+  Color get getTileBackgroundColor2 => tertiaryColorLight;
+  Color get getDialogBackgroundColor => backgroundColor;
+
+  //icon
+  Color get getIconColor => iconColor;
+  Color get getIconBackgroundColor => primaryColorLight;
+
+  //loaders
+  Color get getLoaderColor => primaryColorLight;
+
 
 
   ///==> Define your color variables here
-  Color _primaryColorDark = Color(0xFF000000);
+/*  Color _primaryColorDark = Color(0xFF000000);
   Color _accentColorDark = Color(0xFF666666);
   Color _textColorDark = Color(0xFFFFFFFF);
-  //
-  Color _accentColorLight = Color(0xFFCCCCCC);
-  Color _primaryColorLight = Color(0xFFFFFFFF);
-  Color _textColorLight = Color(0xFF000000);
+  */
+  Color primaryColorLight = Color(0xffEFBC9B);
+  Color onPrimary = Colors.white;
+  Color secondaryColorLight = Color(0xFFFBF3D5);
+  Color tertiaryColorLight = Color(0xff9CAFAA);
+  Color accentColor = Color(0xffD6DAC8);
+  Color textColorLight = Color(0xFF000000);
+  Color backgroundColor = Colors.white;
+  Color iconColor = Colors.white;
+  Color errorColor = Colors.red;
+
 
 
 

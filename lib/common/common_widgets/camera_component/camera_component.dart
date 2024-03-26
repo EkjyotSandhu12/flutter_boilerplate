@@ -164,7 +164,7 @@ class _CameraComponentState extends State<CameraComponent>
     return isInitializing
         ? Center(
             child: CircularProgressIndicator(
-              color: AppColors().primaryColor,
+              color: AppColors().getLoaderColor,
             ),
           )
         : widget.controllerWrapper.cameraController != null &&

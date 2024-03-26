@@ -154,6 +154,10 @@ class Utils {
     }
   }
 
+  static String getFileNameFromPath(String filePath){
+    return filePath.split('/').last;
+  }
+
 
   static bool doesArrayContainsValue(
       {required List<String> array, required String value}) {

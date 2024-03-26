@@ -44,6 +44,8 @@ dependencies:
   auto_route: ^7.9.2
   camera: ^0.10.5+9
   intl: ^0.19.0
+  #go through permission_handler docs
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +54,12 @@ dev_dependencies:
   flutter_native_splash: ^2.3.10
   package_rename: ^1.5.3
   auto_route_generator: ^7.3.2
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app_icon/icon.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21 #flutter pub run flutter_launcher_icons
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

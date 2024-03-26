@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/common/route/router.dart';
 import 'router.gr.dart';
 
 
@@ -8,19 +9,17 @@ class RouteService{
   factory RouteService() => _singleton;
   RouteService._internal();
 
-  navigateBack(BuildContext context, {data}) async {
-    return await context.router.pop(data);
+  navigateBack({data}) async {
+    return await appRouter.maybePop(data);
   }
 
-  pop(BuildContext context, {data}) {
-    return context.router.popForced(data);
+  pop({data}) {
+    return appRouter.popForced(data);
   }
 
   //==> SCREENS NAVIGATIONS
-  customerDetailsSegment1ViewNavigate(BuildContext context,
-      {Widget? customEndButton}) async {
-    return await context.router
-        .push(const Module1Route());
+  customerDetailsSegment1ViewNavigate() async {
+    return await appRouter.push(const Module1Route());
   }
 
 

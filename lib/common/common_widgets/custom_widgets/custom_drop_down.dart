@@ -118,7 +118,7 @@ class _DialogWidgetState extends State<DialogWidget> {
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).orientation != widget.originalOrientation) {
       //if screen orientation changes
-      RouteService().pop(context);
+      RouteService().pop();
     }
 
     return Stack(

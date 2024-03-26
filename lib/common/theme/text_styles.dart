@@ -11,44 +11,34 @@ class TextStyles {
   AppColors appColors = AppColors();
 
   ///==> TEXT STYLES GETTERS
-  TextStyle get titleFont => _getF20TextStyle(fontWeight: FontWeight.bold);
-  TextStyle get titleFont2 => _getF15TextStyle(fontWeight: FontWeight.bold);
-  TextStyle get textFieldErrorStyle => _getF12TextStyle(fontWeight: FontWeight.bold);
-  TextStyle get textFieldInputText => _getF14TextStyle(fontWeight: FontWeight.bold);
+  //buttons
+  TextStyle get boldButtonTextStyle => _getF18TextStyle(fontWeight: FontWeight.w500);
 
+  //input text field
+  TextStyle get textFieldErrorTextStyle => _getF12TextStyle(color: Colors.red);
+  TextStyle get textFieldInputTextStyle => _getF18TextStyle(fontWeight: FontWeight.w500, color: AppColors().getTextFieldBackgroundColor);
+
+  //dialog
+  TextStyle get dialogTitleTextStyle => _getF18TextStyle(fontWeight: FontWeight.w500);
+  TextStyle get dialogBodyTextStyle => _getF15TextStyle(fontWeight: FontWeight.normal);
+  TextStyle get dialogBody2TextStyle => _getF18TextStyle(fontWeight: FontWeight.normal, color: Colors.white);
 
   ///==> Text Styles
-  TextStyle _getF20TextStyle({Color? color, FontWeight? fontWeight}) {
-    TextStyle temp = TextStyle(
-        color: appColors.textColor,
-        fontSize: 20,
-        fontWeight: fontWeight ?? FontWeight.normal);
-    return temp;
+  TextStyle _getF18TextStyle({Color? color, FontWeight? fontWeight}) {
+    return _getTextStyle(fontSize: 18, color: color, fontWeight: fontWeight);
   }
-
   TextStyle _getF15TextStyle({Color? color, FontWeight? fontWeight}) {
-    TextStyle temp = TextStyle(
-        color: appColors.textColor,
-        fontSize: 15,
-        fontWeight: fontWeight ?? FontWeight.normal);
-    return temp;
+    return _getTextStyle(fontSize: 15, color: color, fontWeight: fontWeight);
   }
-
-  TextStyle _getF14TextStyle({Color? color, FontWeight? fontWeight}) {
-    TextStyle temp = TextStyle(
-        color: appColors.textColor,
-        fontSize: 14,
-        fontWeight: fontWeight ?? FontWeight.normal);
-    return temp;
-  }
-
   TextStyle _getF12TextStyle({Color? color, FontWeight? fontWeight}) {
+    return _getTextStyle(fontSize: 12, color: color, fontWeight: fontWeight);
+  }
+  _getTextStyle(
+      {required double fontSize, Color? color, FontWeight? fontWeight}) {
     TextStyle temp = TextStyle(
-        color: appColors.textColor,
-        fontSize: 12,
+        color: color ?? appColors.getTextInputColor,
+        fontSize: fontSize,
         fontWeight: fontWeight ?? FontWeight.normal);
     return temp;
   }
-
-
 }

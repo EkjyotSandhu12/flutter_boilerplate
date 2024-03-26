@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:retry/retry.dart';
 import '../../env.dart';
+import '../common_dtos/reponse_dto.dart';
 import '../helpers/network_error_message_helper.dart';
 import '../services/loggy_service.dart';
 import 'api_cancel_token_manager.dart';
@@ -58,15 +59,16 @@ class ApiService {
       apiCancelRequestManager.removeTokenFromMap(endPoint, cancelToken);
 
       //this will only enter here is the status code is 2xx. else it will enter catch block
-      return response.data is String
-          ? jsonDecode(response.data)
-          : response.data;
+      ResponseDto responseDto = ResponseDto.fromJson(
+        response.data is String ? jsonDecode(response.data) : response.data,
+      );
+      return responseDto;
     } catch (e) {
       throw _errorMessageHandler(error: e);
     }
   }
 
-  _errorMessageHandler({error}) {
+ String _errorMessageHandler({error}) {
     String errorMessage;
     if (error is DioException) {
       errorMessage = NetworkErrorMessageHelper()
@@ -76,6 +78,7 @@ class ApiService {
     }
     myLog.errorLog('${errorMessage}', StackTrace.current,
         topic: '_errorMessageHandler');
+    return errorMessage;
   }
 
   /// Returns full api url(Uri) using the Environment Variable

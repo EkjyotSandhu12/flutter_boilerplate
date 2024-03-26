@@ -9,45 +9,50 @@ import '../services/screen_properties_service.dart';
 
 class DesignMetrics {
   ///==> MARGINS/PADDING/HEIGHT/WIDTH DECLARE
-  double _margin4 = 4;
   double _margin6 = 6;
-
   ///
-  double _padding10 = 10;
-  double _padding15 = 15;
-
+  double _padding22 = 22;
   ///
-  double _height60 = 60;
-  double _height78 = 78;
-
+  double _height330 = 330;
   ///
-  double _width170 = 170;
-  double _width105 = 105;
-
+  double _width300 = 300;
   ///
-  double _radius30 = 30;
-  double _radius10 = 10;
-
+  double _radius12 = 12;
+  ///
+  double _size80 = 80;
+  double _size100 = 100;
+  ///
+  double _gap12 = 12;
   ///
 
   ///==> GETTERS
+  //==> GAPS
+  double get dialogTitleBodyGap => _gap12;
+  double get dialogBodyFooterGap => _gap12;
+
+  //==> ICON SIZE
+  double get iconSize => _size80;
+  double get iconSize2 => _size100;
+
   //==> APP MARGINS GETTER
-  double get titleAndTxtFieldGap => _updateBasedOnScreenWidth(_margin6);
-  double get marginGapBetweenInputTextFieldVer => _updateBasedOnScreenWidth(_margin6); //used when there are multiple text-fields
+
+
   //==> APP PADDINGS GETTER
-  double get entireAppPaddingTop => _updateBasedOnScreenWidth(_padding10);
-  double get entireAppPaddingBottom => _updateBasedOnScreenWidth(_padding10);
+  double get dialogPaddingVer => _padding22;
+  double get dialogPaddingHor => _padding22;
+
 
   //==> APP HEIGHTS GETTER
-  double get bottomNavHeight => _updateBasedOnScreenWidth(_height60);
-  double get appCommonHeaderHeight => _updateBasedOnScreenWidth(_height60);
+  double get dialogHeight => _height330;
+
 
   //==> APP WIDTHS GETTER
-  double get buttonWidthBelowList => _updateBasedOnScreenWidth(_width170); //most common button width used through out the app.
-  double get dialogButtonWidth =>  _updateBasedOnScreenWidth(_width105); //most common button width used through out the app.
+  double get dialogWidth => _width300;
+
+
   //==> APP RADIUS GETTER
-  double get imageHolderContainerRadius => _updateBasedOnScreenWidth(_radius30);
-  BorderRadius get dialogRadius => BorderRadius.circular(_updateBasedOnScreenWidth(_radius30));
+  double get commonContainerRadius12 => _updateBasedOnScreenWidth(_radius12);
+  double get dialogRadius => _updateBasedOnScreenWidth(_radius12);
 
   ///==================================================///
   _updateBasedOnScreenWidth(double moreThan400,{

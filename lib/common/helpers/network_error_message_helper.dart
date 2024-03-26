@@ -99,7 +99,7 @@ class NetworkErrorMessageHelper {
         break;
       default:
         errorMessage =
-        "Unknown Error: The server returned an unexpected status code or error.";
+        "Unknown Error";
     }
     return "$statusCode | $errorMessage";
   }
