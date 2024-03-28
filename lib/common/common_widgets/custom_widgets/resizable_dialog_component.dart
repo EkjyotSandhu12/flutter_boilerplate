@@ -7,21 +7,25 @@ import '../../utils/utils.dart';
 //this will give cool animation
 
 showCustomResizableDialog(
-  BuildContext context, {
-  required ResizableDialogController resizableDialogController,
-}) {
-  showDialog(
+    BuildContext context, {
+      required ResizableDialogController resizableDialogController,
+    }) async {
+  resizableDialogController.isDialogOpen = true;
+  await showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (context) => ResizableDialogUI(
       resizableDialogController: resizableDialogController,
     ),
   );
+  resizableDialogController.isDialogOpen = false;
 }
 
 class ResizableDialogController with ChangeNotifier {
   double initialHeight;
   double initialWidth;
   Widget initialWidget;
+  bool isDialogOpen = false;
 
   ResizableDialogController({
     required this.initialHeight,
@@ -30,19 +34,29 @@ class ResizableDialogController with ChangeNotifier {
   });
 
   updateDialogWidget(
-    double height,
-    double width,
-    Widget widget,
-  ) {
+      double height,
+      double width,
+      Widget widget,
+      ) {
     initialHeight = height;
     initialWidth = width;
     initialWidget = widget;
     notifyListeners();
   }
+
+  Future waitForDialogToClose() async {
+    while (true) {
+      await Future.delayed(Duration(milliseconds: 100));
+      if (!isDialogOpen) {
+        break;
+      }
+    }
+    return;
+  }
 }
 
 class ResizableDialogUI extends StatefulWidget {
-  const ResizableDialogUI({super.key, required this.resizableDialogController});
+  ResizableDialogUI({super.key, required this.resizableDialogController});
 
   final ResizableDialogController resizableDialogController;
 
@@ -54,7 +68,7 @@ class _ResizableDialogUIState extends State<ResizableDialogUI> {
   @override
   void initState() {
     widget.resizableDialogController.addListener(() {
-      setState(() {});
+      if (mounted) setState(() {});
     });
     super.initState();
   }
@@ -70,19 +84,19 @@ class _ResizableDialogUIState extends State<ResizableDialogUI> {
             curve: Curves.easeOutQuint,
             height: widget.resizableDialogController.initialHeight,
             width: widget.resizableDialogController.initialWidth,
-            duration: const Duration(
-              milliseconds: 600,
-            ),
             child: AnimatedSwitcher(
               switchInCurve: Curves.easeOutQuint,
               switchOutCurve: Curves.easeOutQuint,
-              duration: const Duration(
-                milliseconds: 800,
-              ),
               child: SizedBox(
                 key: ValueKey(Utils.randomInt()),
                 child: widget.resizableDialogController.initialWidget,
               ),
+              duration: Duration(
+                milliseconds: 800,
+              ),
+            ),
+            duration: Duration(
+              milliseconds: 600,
             ),
           ),
         ),

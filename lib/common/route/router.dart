@@ -22,7 +22,8 @@ class AppRouter extends $AppRouter {
       AutoRoutePage<T> page,
       ) {
     return PageRouteBuilder(
-      transitionsBuilder: TransitionsBuilders.fadeIn,
+      reverseTransitionDuration: Duration.zero,
+      transitionDuration: Duration.zero,
       settings: page,
       pageBuilder: (_, animation, ___) => excludeScaling.contains(page.name)
           ? child

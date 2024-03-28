@@ -4,7 +4,6 @@ import '../../theme/app_colors.dart';
 import '../../services/loggy_service.dart';
 import '../../values/global_variables.dart';
 
-
 class CameraControllerWrapper {
   CameraControllerWrapper() {
     assignCameraController();
@@ -24,6 +23,8 @@ class CameraControllerWrapper {
         ResolutionPreset.max,
         enableAudio: false,
       );
+    } else {
+      throw 'No cameras found!';
     }
   }
 
@@ -39,6 +40,7 @@ class CameraControllerWrapper {
 ///as provided, by its parent container widget
 class CameraComponent extends StatefulWidget {
   CameraComponent({super.key, required this.controllerWrapper});
+
   CameraControllerWrapper controllerWrapper;
 
   @override
@@ -120,7 +122,7 @@ class _CameraComponentState extends State<CameraComponent>
     } else if (state == AppLifecycleState.resumed) {
       myLog.traceLog(
           'controllerWrapper => ${widget.controllerWrapper.isDisposed}');
-      if (true/*||await Permission.camera.isGranted*/) {
+      if (true /*||await Permission.camera.isGranted*/) {
         widget.controllerWrapper.reassignController();
         initializeCameraController();
       }
