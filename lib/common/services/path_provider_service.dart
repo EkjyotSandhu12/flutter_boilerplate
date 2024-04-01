@@ -9,10 +9,12 @@ class PathProviderService {
 
   String? _applicationDirectoryPath;
   String? _tempDirectoryPath;
+  String? _cacheDirectoryPath;
 
   init() async {
     _applicationDirectoryPath = await _getTempPath();
     _tempDirectoryPath = await _getApplicationDirPath();
+    _cacheDirectoryPath = await _getCacheDirPath();
   }
 
   _getTempPath() async {
@@ -35,7 +37,19 @@ class PathProviderService {
     }
   }
 
+  _getCacheDirPath() async {
+    try {
+      _cacheDirectoryPath = _cacheDirectoryPath??(await getApplicationCacheDirectory()).path;
+      return _cacheDirectoryPath;
+    } catch (e,s) {
+      myLog.errorLog('_cacheDirectoryPath Failed :: $e', s);
+      return null;
+    }
+  }
+
+
   get getTempPath async => await _getTempPath();
   get getApplicationDirPath async => await _getApplicationDirPath();
+  get getCacheDirPath async => await _getCacheDirPath();
 
 }

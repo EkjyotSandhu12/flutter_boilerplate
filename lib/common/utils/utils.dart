@@ -9,25 +9,26 @@ import 'package:intl/intl.dart';
 class Utils {
   //we are using timer here as, the keyboard takes time to open.
   static Timer? timer;
-  static ensureVisibleTextField(BuildContext context) {
+
+  static ensureVisibleTextField(BuildContext context,{int? tries, Duration? eachTryDuration, Duration? scrollSpeed}) {
     if (timer?.isActive ?? false) {
       timer?.cancel();
     }
     timer = Timer.periodic(
-      const Duration(milliseconds: 50),
-      (timer) {
-        if (timer.tick > 20) {
+      eachTryDuration??Duration(milliseconds: 50),
+          (timer) {
+        if (timer.tick > (tries??20)) {
           timer.cancel();
         } else if (ScreenUtils.viewInsetsBottom(context) > 0) {
           Future.delayed(
-            const Duration(milliseconds: 250),
-            () {
+            Duration(milliseconds: 250),
+                () {
               timer.cancel();
             },
           );
         }
         Scrollable.ensureVisible(context,
-            duration: const Duration(milliseconds: 200), alignment: .1);
+            duration: scrollSpeed?? Duration(milliseconds: 200), alignment: .1);
       },
     );
   }
@@ -95,8 +96,6 @@ class Utils {
     return (bytes / 1000000).floor();
   }
 
-
-
   static dateTimeToString(DateTime? dt) {
     if (dt != null) {
       final now = DateTime.now();
@@ -128,7 +127,6 @@ class Utils {
     return extension;
   }
 
-
   static bool isFileVideo({required String filePath}) {
     String extension = filePath.split('.').last.toLowerCase();
     // kLog("Selected Video File Extension -> $extension");
@@ -154,10 +152,66 @@ class Utils {
     }
   }
 
-  static String getFileNameFromPath(String filePath){
+  static String getFileNameFromPath(String filePath) {
     return filePath.split('/').last;
   }
 
+  //output => '1st, 2nd and 3rd'
+  static String numberToReadableString(List<int> number) {
+
+
+    if(number.length == 1){
+      return '${addSuffixToNumber(number.first)}';
+    }
+
+    if(number.length == 2){
+      return '${addSuffixToNumber(number.first)} and ${addSuffixToNumber(number[1])}';
+    }
+
+
+    String string = '';
+
+    number.forEach(
+          (num) {
+
+
+
+        if (number.indexOf(num) == number.length - 1) {
+          string += 'and ${addSuffixToNumber(num)}';
+        } else {
+          string +=
+          '${addSuffixToNumber(num)}${number.indexOf(num) > (number.length) ? ' ' : ', '}';
+        }
+
+
+
+      },
+    );
+    return string;
+  }
+
+  //output => '1st'
+  static String addSuffixToNumber(int number) {
+    String suffix;
+
+    // Determine the suffix based on the last digit of the number
+    switch (number % 10) {
+      case 1:
+        suffix = 'st';
+        break;
+      case 2:
+        suffix = 'nd';
+        break;
+      case 3:
+        suffix = 'rd';
+        break;
+      default:
+        suffix = 'th';
+        break;
+    }
+    // Return the number with the appropriate suffix
+    return number.toString() + suffix;
+  }
 
   static bool doesArrayContainsValue(
       {required List<String> array, required String value}) {
@@ -188,6 +242,4 @@ class Utils {
     final RegExp regex = RegExp(r'^\d+$');
     return regex.hasMatch(input);
   }
-
-
 }

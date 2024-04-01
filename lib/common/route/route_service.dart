@@ -9,7 +9,7 @@ class RouteService{
   factory RouteService() => _singleton;
   RouteService._internal();
 
-  navigateBack({data}) async {
+  maybePop({data}) async {
     return await appRouter.maybePop(data);
   }
 
