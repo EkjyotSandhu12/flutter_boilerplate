@@ -1,7 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../services/loggy_service.dart';
+import '../../theme/app_colors.dart';
 import '../../values/global_variables.dart';
 
 class CameraControllerWrapper {
@@ -15,7 +16,7 @@ class CameraControllerWrapper {
   }
 
   assignCameraController() {
-    myLog.traceLog('assignCameraController executed');
+    Loggy().traceLog('assignCameraController executed');
     isDisposed = false;
     if (GlobalVariables().cameras.isNotEmpty) {
       cameraController = CameraController(
@@ -23,11 +24,10 @@ class CameraControllerWrapper {
         ResolutionPreset.max,
         enableAudio: false,
       );
-    } else {
-      throw 'No cameras found!';
     }
   }
 
+  ValueNotifier<bool> isCapturing = ValueNotifier<bool>(false);
   CameraController? cameraController;
   bool isDisposed = false;
   late Future<XFile?> Function() captureImageFunction;
@@ -63,16 +63,19 @@ class _CameraComponentState extends State<CameraComponent>
   }
 
   Future<XFile?> captureImage() async {
-    myLog.infoLog("Captured Image", topic: "CameraPage");
+    Loggy().infoLog("Captured Image", topic: "CameraPage");
     if (!widget.controllerWrapper.cameraController!.value.isInitialized)
       return null;
+    widget.controllerWrapper.isCapturing.value = true;
     try {
       XFile file =
-          await widget.controllerWrapper.cameraController!.takePicture();
+      await widget.controllerWrapper.cameraController!.takePicture();
       return file;
     } catch (e, stacktrace) {
-      myLog.errorLog("Unable to capture image :: $e", stacktrace);
+      Loggy().errorLog("Unable to capture image :: $e", stacktrace);
       return null;
+    }finally{
+      widget.controllerWrapper.isCapturing.value = false;
     }
   }
 
@@ -91,7 +94,7 @@ class _CameraComponentState extends State<CameraComponent>
         isInitializing = false;
       });
     }).catchError(
-      (Object e) {
+          (Object e) {
         if (mounted) {
           setState(() {
             isInitializing = false;
@@ -100,7 +103,7 @@ class _CameraComponentState extends State<CameraComponent>
         if (e is CameraException) {
           switch (e.code) {
             case 'CameraAccessDenied':
-              showPermissionDialog();
+            // showPermissionDialog();
               break;
           }
         }
@@ -120,9 +123,8 @@ class _CameraComponentState extends State<CameraComponent>
     if (state == AppLifecycleState.inactive) {
       widget.controllerWrapper.disposeController();
     } else if (state == AppLifecycleState.resumed) {
-      myLog.traceLog(
-          'controllerWrapper => ${widget.controllerWrapper.isDisposed}');
-      if (true /*||await Permission.camera.isGranted*/) {
+
+      if (await Permission.camera.isGranted) {
         widget.controllerWrapper.reassignController();
         initializeCameraController();
       }
@@ -130,7 +132,6 @@ class _CameraComponentState extends State<CameraComponent>
   }
 
   showPermissionDialog() {
-    //navigate user to open settings and grant the permission
 /*    ShowDialog().showSimpleDialog(
       context,
       titleText: "Camera Access Denied",
@@ -138,7 +139,7 @@ class _CameraComponentState extends State<CameraComponent>
       buttonText: "Open Settings",
       onButtonTap: () {
         openAppSettings();
-        NavigationService().pop(context);
+        NavigationService().pop();
       },
     );*/
   }
@@ -150,33 +151,42 @@ class _CameraComponentState extends State<CameraComponent>
   }
 
   cameraWidget() {
-    double scale = widget.controllerWrapper.cameraController!.value.aspectRatio;
-    if (scale < 1) scale = 1 / scale;
-    return Transform.scale(
-      scale: scale,
-      child: Center(
-        child: CameraPreview(widget.controllerWrapper.cameraController!),
-      ),
+    return ClipRect(
+      child: LayoutBuilder(builder: (_, constraints) {
+        double aspectRatio = widget.controllerWrapper.cameraController!.value
+            .aspectRatio; // Get camera preview height
+        //Please note:- this logic is only compatible in parent widget whose 'width' is more than 'height'.
+        final size = Size(constraints.maxHeight, constraints.maxWidth);
+        // calculate scale depending on widget and camera ratios
+        var scale = size.aspectRatio * aspectRatio;
+        // to prevent scaling down, invert the value
+        if (scale < 1) scale = 1 / scale;
+        return Transform.scale(
+          scale: scale,
+          child: Center(
+            child: CameraPreview(widget.controllerWrapper.cameraController!),
+          ),
+        );
+      }),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    myLog.traceLog('isCapturing $isInitializing');
     return isInitializing
         ? Center(
-            child: CircularProgressIndicator(
-              color: AppColors().getLoaderColor,
-            ),
-          )
+      child: CircularProgressIndicator(
+        color: AppColors().primaryColorLight,
+      ),
+    )
         : widget.controllerWrapper.cameraController != null &&
-                (widget.controllerWrapper.cameraController!.value
-                        .isInitialized &&
-                    !widget.controllerWrapper.isDisposed)
-            ? cameraWidget()
-            : const SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-              );
+        (widget.controllerWrapper.cameraController!.value
+            .isInitialized &&
+            !widget.controllerWrapper.isDisposed)
+        ? cameraWidget()
+        : const SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+    );
   }
 }
