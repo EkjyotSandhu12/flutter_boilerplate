@@ -1,7 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import '../utils/screen_utils.dart';
 import 'package:intl/intl.dart';
@@ -233,6 +235,24 @@ class Utils {
     return false;
   }
 
+  ///--> Function flatten the nested list
+  static mutliDArrayTo2Darray(List multiArray) {
+    List singleArray = [];
+    for (var list1 in multiArray) {
+      for (var list2 in list1) {
+        singleArray.add(list2);
+      }
+    }
+    return singleArray;
+  }
+
+  //Files
+  ///--> function to convert File to Unit8list
+  static Future<Uint8List> fileToUint8List(File file) async {
+    var bytes = await file.readAsBytes();
+    return Uint8List.fromList(bytes);
+  }
+
   ///==> NUMBERS/MATHS
   static int randomInt() {
     return DateTime.now().millisecondsSinceEpoch;
@@ -241,5 +261,19 @@ class Utils {
   static bool isStringOnlyNumbers(String input) {
     final RegExp regex = RegExp(r'^\d+$');
     return regex.hasMatch(input);
+  }
+
+
+
+  static cameraCapturedImagePreview(
+      {required CameraLensDirection cameraLensDirection,
+        required Widget child}) {
+    return Transform(
+      alignment: Alignment.center,
+      transform: cameraLensDirection == CameraLensDirection.back
+          ? Matrix4.identity()
+          : Matrix4.rotationY(pi),
+      child: child,
+    );
   }
 }
