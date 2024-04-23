@@ -47,15 +47,19 @@ class ApiInterceptor extends Interceptor {
 }
 
 apiInterceptorBodyPrinter(dynamic body) {
-  Map bodyData = {};
-  if (body is FormData) {
-    FormData formData = body;
-    bodyData.addEntries(formData.fields);
-    MapEntry mapEntry = MapEntry('${formData.files.first.key}',
-        formData.files.map((e) => e.value.filename));
-    bodyData.addEntries([mapEntry]);
-  } else {
-    bodyData = body;
+  try {
+    Map bodyData = {};
+    if (body is FormData) {
+      FormData formData = body;
+      bodyData.addEntries(formData.fields);
+      MapEntry mapEntry = MapEntry('${formData.files.first.key}',
+          formData.files.map((e) => e.value.filename));
+      bodyData.addEntries([mapEntry]);
+    } else {
+      bodyData = body;
+    }
+    return bodyData;
+  }  catch (e) {
+    return {};
   }
-  return bodyData;
 }
