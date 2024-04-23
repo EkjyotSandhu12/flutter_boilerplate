@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -51,10 +52,12 @@ class ApiService {
               ),
             ),
         // Retry on SocketException or TimeoutException
-        retryIf: (e) =>
-            e is DioException &&
-            (e.type != DioExceptionType.cancel &&
-                e.type != DioExceptionType.badResponse),
+          retryIf: (e) {
+            log('ERROR retryIf ==> $e',);
+            return e is DioException &&
+                (e.type != DioExceptionType.cancel &&
+                    e.type != DioExceptionType.badResponse);
+          }
       );
       apiCancelRequestManager.removeTokenFromMap(endPoint, cancelToken);
 
