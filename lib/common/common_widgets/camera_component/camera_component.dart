@@ -1,9 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/common/route/route_service.dart';
+import 'package:flutter_boilerplate/common/theme/app_colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../services/loggy_service.dart';
-import '../../theme/app_colors.dart';
 import '../../values/global_variables.dart';
+import '../app_widgets/dialogs/show_dialog.dart';
 
 class CameraControllerWrapper {
   CameraControllerWrapper() {
@@ -27,7 +29,6 @@ class CameraControllerWrapper {
     }
   }
 
-  ValueNotifier<bool> isCapturing = ValueNotifier<bool>(false);
   CameraController? cameraController;
   bool isDisposed = false;
   late Future<XFile?> Function() captureImageFunction;
@@ -66,7 +67,6 @@ class _CameraComponentState extends State<CameraComponent>
     Loggy().infoLog("Captured Image", topic: "CameraPage");
     if (!widget.controllerWrapper.cameraController!.value.isInitialized)
       return null;
-    widget.controllerWrapper.isCapturing.value = true;
     try {
       XFile file =
       await widget.controllerWrapper.cameraController!.takePicture();
@@ -74,8 +74,6 @@ class _CameraComponentState extends State<CameraComponent>
     } catch (e, stacktrace) {
       Loggy().errorLog("Unable to capture image :: $e", stacktrace);
       return null;
-    }finally{
-      widget.controllerWrapper.isCapturing.value = false;
     }
   }
 
@@ -103,7 +101,7 @@ class _CameraComponentState extends State<CameraComponent>
         if (e is CameraException) {
           switch (e.code) {
             case 'CameraAccessDenied':
-            // showPermissionDialog();
+              showPermissionDialog();
               break;
           }
         }
@@ -113,17 +111,22 @@ class _CameraComponentState extends State<CameraComponent>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    // App state changed before we got the chance to initialize.
-    myLog.traceLog("didChangeAppLifecycleState $state");
 
-    if (!widget.controllerWrapper.cameraController!.value.isInitialized) {
+    // App state changed before we got the chance to initialize.
+    Loggy().traceLog("didChangeAppLifecycleState $state");
+
+    if (!widget.controllerWrapper.cameraController!.value.isInitialized && (await Permission.camera.isDenied)) {
       return;
     }
+
+    Loggy().traceLog("didChangeAppLifecycleState1 $state");
+
 
     if (state == AppLifecycleState.inactive) {
       widget.controllerWrapper.disposeController();
     } else if (state == AppLifecycleState.resumed) {
-
+      Loggy().traceLog(
+          'controllerWrapper => ${widget.controllerWrapper.isDisposed}');
       if (await Permission.camera.isGranted) {
         widget.controllerWrapper.reassignController();
         initializeCameraController();
@@ -132,16 +135,16 @@ class _CameraComponentState extends State<CameraComponent>
   }
 
   showPermissionDialog() {
-/*    ShowDialog().showSimpleDialog(
+    ShowDialog().showSimpleDialog(
       context,
-      titleText: "Camera Access Denied",
+      title: "Camera Access Denied",
       bodyText: "Camera access is required in order to capture images.",
       buttonText: "Open Settings",
       onButtonTap: () {
         openAppSettings();
-        NavigationService().pop();
+        RouteService().pop();
       },
-    );*/
+    );
   }
 
   @override
@@ -173,6 +176,7 @@ class _CameraComponentState extends State<CameraComponent>
 
   @override
   Widget build(BuildContext context) {
+    Loggy().traceLog('isCapturing $isInitializing');
     return isInitializing
         ? Center(
       child: CircularProgressIndicator(
