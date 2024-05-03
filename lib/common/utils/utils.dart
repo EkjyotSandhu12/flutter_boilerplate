@@ -5,6 +5,9 @@ import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/common/common_widgets/app_widgets/custom_circular_loader_widget.dart';
+import 'package:flutter_boilerplate/common/route/route_service.dart';
+import '../common_widgets/app_widgets/dialogs/common_dialog_ui.dart';
 import '../utils/screen_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -117,6 +120,30 @@ class Utils {
     }
   }
 
+  showDialogUntilConditionIsTrue(BuildContext context,
+      {required bool Function() condition, required String title}) async {
+    if (condition() != true) return;
+    bool isPopped = false;
+    showDialog(
+      context: context,
+      builder: (context) => CustomCircularLoaderWidget(),
+    ).then((value) => isPopped = true);
+
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 50));
+      if(isPopped){
+        break;
+      }
+      if (condition() != true) {
+        if (!isPopped) {
+          RouteService().pop();
+        }
+        break;
+      }
+    }
+  }
+
+
   static convertSecondsToMinuteSecond(int seconds) {
     int minute = seconds ~/ 60;
     int secondsInMinute = (seconds - (seconds ~/ 60 * 60)).toInt();
@@ -175,18 +202,12 @@ class Utils {
 
     number.forEach(
           (num) {
-
-
-
         if (number.indexOf(num) == number.length - 1) {
           string += 'and ${addSuffixToNumber(num)}';
         } else {
           string +=
           '${addSuffixToNumber(num)}${number.indexOf(num) > (number.length) ? ' ' : ', '}';
         }
-
-
-
       },
     );
     return string;
