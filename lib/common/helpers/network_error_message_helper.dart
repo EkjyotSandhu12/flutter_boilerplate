@@ -98,8 +98,7 @@ class NetworkErrorMessageHelper {
         'Server error - the server failed to fulfil an apparently valid request';
         break;
       default:
-        errorMessage =
-        "Unknown Error";
+       return 'Something went wrong';
     }
     return "$statusCode | $errorMessage";
   }

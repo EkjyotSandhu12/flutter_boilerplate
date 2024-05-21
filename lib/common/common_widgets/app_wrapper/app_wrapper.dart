@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //wrapper to get a global control over multiple widgets in order to update them or make changes in all of them at the same time.
 
+
 class AppWrapper extends StatefulWidget {
   const AppWrapper({super.key});
 

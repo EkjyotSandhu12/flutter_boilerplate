@@ -2,19 +2,19 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/common/common_widgets/app_widgets/custom_circular_loader_widget.dart';
 import 'package:flutter_boilerplate/common/route/route_service.dart';
-import '../common_widgets/app_widgets/dialogs/common_dialog_ui.dart';
 import '../utils/screen_utils.dart';
 import 'package:intl/intl.dart';
-
+enum FileType { pdf, image }
 class Utils {
+
+
+  ///==> WIDGET RELATED
   //we are using timer here as, the keyboard takes time to open.
   static Timer? timer;
-
   static ensureVisibleTextField(BuildContext context,{int? tries, Duration? eachTryDuration, Duration? scrollSpeed}) {
     if (timer?.isActive ?? false) {
       timer?.cancel();
@@ -37,11 +37,19 @@ class Utils {
       },
     );
   }
-
+  static bool isFocusing = false;
+  static ensureVisibleOnce(BuildContext context) async {
+    if (isFocusing) return;
+    isFocusing = true;
+    await Scrollable.ensureVisible(context,
+        duration: const Duration(milliseconds: 150), alignment: .5);
+    isFocusing = false;
+  }
   static hideKeyboard() {
     // myLog.traceLog("KeyBoard Hide", topic: "hideKeyboard");
     FocusManager.instance.primaryFocus?.unfocus();
   }
+
 
   static bool isScrollPositionPastLimit(ScrollController controller,
       {double limitPercentage = 80}) {
@@ -67,6 +75,8 @@ class Utils {
     double x = position.dx;
     return Offset(x, y);
   }
+
+  ///==> LOGIC RELATED
 
   static Future<String?> networkImageToBase64(String imageUrl) async {
 /*    try {
@@ -142,7 +152,6 @@ class Utils {
       }
     }
   }
-
 
   static convertSecondsToMinuteSecond(int seconds) {
     int minute = seconds ~/ 60;
@@ -256,7 +265,27 @@ class Utils {
     return false;
   }
 
-  ///--> Function flatten the nested list
+  //FILE
+  static FileType? checkFileType(String fileNameWithExtension) {
+    final extension = fileNameWithExtension.split('.').last.toLowerCase();
+    // Loggy().traceLog('extension => $extension');
+    if (extension.toLowerCase().contains('jpg') ||
+        extension.toLowerCase().contains('jpeg') ||
+        extension.toLowerCase().contains('png')) {
+      return FileType.image;
+    } else if (extension.toLowerCase().contains('pdf')) {
+      return FileType.pdf;
+    }
+    return null;
+  }
+
+  static String getFileNameFromFilePath(String filePath) {
+    return filePath.split('/').last;
+  }
+  static Future<Uint8List> fileToUint8List(File file) async {
+    var bytes = await file.readAsBytes();
+    return Uint8List.fromList(bytes);
+  }
   static mutliDArrayTo2Darray(List multiArray) {
     List singleArray = [];
     for (var list1 in multiArray) {
@@ -267,25 +296,18 @@ class Utils {
     return singleArray;
   }
 
-  //Files
-  ///--> function to convert File to Unit8list
-  static Future<Uint8List> fileToUint8List(File file) async {
-    var bytes = await file.readAsBytes();
-    return Uint8List.fromList(bytes);
-  }
-
-  ///==> NUMBERS/MATHS
+  ///==> NUMBERS/MATHS RELATED
   static int randomInt() {
     return DateTime.now().millisecondsSinceEpoch;
   }
-
   static bool isStringOnlyNumbers(String input) {
     final RegExp regex = RegExp(r'^\d+$');
     return regex.hasMatch(input);
   }
 
 
-
+  ///==> SPECIFIC PACKAGE RELATED
+  //camera
   static cameraCapturedImagePreview(
       {required CameraLensDirection cameraLensDirection,
         required Widget child}) {

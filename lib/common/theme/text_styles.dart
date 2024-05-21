@@ -33,6 +33,7 @@ class TextStyles {
   TextStyle _getF12TextStyle({Color? color, FontWeight? fontWeight}) {
     return _getTextStyle(fontSize: 12, color: color, fontWeight: fontWeight);
   }
+
   _getTextStyle(
       {required double fontSize, Color? color, FontWeight? fontWeight}) {
     TextStyle temp = TextStyle(
