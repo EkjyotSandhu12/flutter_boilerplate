@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_boilerplate/common/common_widgets/app_widgets/snackbar/snack_bar_ui.dart';
+import 'package:flutter_boilerplate/common/components/app_widgets/snackbar/snack_bar_ui.dart';
 
 class ShowSnackBars {
   _commonShowSnackBar(BuildContext context,

@@ -14,18 +14,7 @@ class Module1Screen extends StatelessWidget {
       appBar: AppBar(),
       body: Center(
         child: ElevatedButton(
-          onPressed: () async {
-            try {
-              await ApiService()
-                  .requestApi(method: MethodType.post, endPoint: '', data: {
-                'responseCode': 403,
-                'errorMessage': {'test': 'test'},
-                'encode': false,
-              });
-            } catch (e) {
-              myLog.traceLog('${e}');
-            }
-          },
+          onPressed: () async {},
           child: Text('Api Error Call'),
         ),
       ),

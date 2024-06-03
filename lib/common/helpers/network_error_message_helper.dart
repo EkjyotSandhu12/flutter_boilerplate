@@ -24,7 +24,7 @@ class NetworkErrorMessageHelper {
     switch (statusCode) {
       case null:
         errorMessage =
-        "Unknown Error: The server returned an unexpected status code or error.";
+        "Something went wrong";
         break;
       case >= 300 && < 400:
         errorMessage =

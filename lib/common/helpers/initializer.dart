@@ -4,10 +4,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+import '../app_values/global_variables.dart';
 import '../services/get_storage_service/get_storage_service.dart';
 import '../services/loggy_service.dart';
 import '../services/path_provider_service.dart';
-import '../values/global_variables.dart';
 
 abstract class Initializer{
   static init(VoidCallback runApp) async {

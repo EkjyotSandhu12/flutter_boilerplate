@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/app_strings.dart';
+import '../app_values/app_strings.dart';
 import '../services/loggy_service.dart';
 
 class Handler extends WidgetsBindingObserver {

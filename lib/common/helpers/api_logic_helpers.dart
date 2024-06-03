@@ -62,7 +62,7 @@ EXAMPLE */
 
     try {
       ResponseDto response = ResponseDto.fromJson(
-        await ApiService().requestApi(method: MethodType.get, endPoint: ''),
+        await ApiService().requestGetApi(endPoint: ''),
       );
 
       if (response.success) {

@@ -4,10 +4,11 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/common/common_widgets/app_widgets/custom_circular_loader_widget.dart';
 import 'package:flutter_boilerplate/common/route/route_service.dart';
+import '../components/app_widgets/custom_circular_loader_widget.dart';
 import '../utils/screen_utils.dart';
 import 'package:intl/intl.dart';
+
 enum FileType { pdf, image }
 class Utils {
 

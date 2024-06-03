@@ -33,16 +33,16 @@ class _NetworkImageWidgetState extends State<NetworkImageWidget> {
               hasImageLoaded: widget.hasImageLoaded,
               loadingWidget: widget.loadingWidget),
       loadingBuilder: (
-          context,
-          child,
-          progress,
-          ) =>
-      progress == null
-          ? child
-          : widget.loadingWidget ??
-          Center(
-            child: CustomCircularLoaderWidget(),
-          ),
+        context,
+        child,
+        progress,
+      ) =>
+          progress == null
+              ? child
+              : widget.loadingWidget ??
+                  Center(
+                    child: CustomCircularLoaderWidget(),
+                  ),
       errorBuilder: (context, error, stackTrace) {
         return Center(
           child: Padding(
@@ -85,23 +85,23 @@ class FileImageWidget extends StatelessWidget {
     return Container(
       child: isAsset
           ? Image.asset(
-        cacheWidth: cacheWidth,
-        imageUrl,
-        fit: BoxFit.cover,
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
-            frameBuilder(context, child, frame, wasSynchronouslyLoaded),
-        errorBuilder: (context, error, stackTrace) =>
-            errorBuilder(context, error, stackTrace),
-      )
+              cacheWidth: cacheWidth,
+              imageUrl,
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
+                  frameBuilder(context, child, frame, wasSynchronouslyLoaded),
+              errorBuilder: (context, error, stackTrace) =>
+                  errorBuilder(context, error, stackTrace),
+            )
           : Image.file(
-        cacheWidth: cacheWidth,
-        File(imageUrl),
-        fit: BoxFit.cover,
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
-            frameBuilder(context, child, frame, wasSynchronouslyLoaded),
-        errorBuilder: (context, error, stackTrace) =>
-            errorBuilder(context, error, stackTrace),
-      ),
+              cacheWidth: cacheWidth,
+              File(imageUrl),
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
+                  frameBuilder(context, child, frame, wasSynchronouslyLoaded),
+              errorBuilder: (context, error, stackTrace) =>
+                  errorBuilder(context, error, stackTrace),
+            ),
     );
   }
 
@@ -133,9 +133,9 @@ frameBuilder(
   return wasSynchronouslyLoaded
       ? child
       : frame == null
-      ? loadingWidget ??
-      Center(
-        child: CustomCircularLoaderWidget(),
-      )
-      : child;
+          ? loadingWidget ??
+              Center(
+                child: CustomCircularLoaderWidget(),
+              )
+          : child;
 }

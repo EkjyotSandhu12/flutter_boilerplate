@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../common_widgets/app_widgets/custom_circular_loader_widget.dart';
-import '../common_widgets/app_widgets/dialogs/show_dialog.dart';
+import '../components/app_widgets/custom_circular_loader_widget.dart';
 import '../route/route_service.dart';
 import '../services/loggy_service.dart';
 

@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_boilerplate/common/api/dio_client.dart';
-
+import '../app_values/global_variables.dart';
 import '../services/loggy_service.dart';
-import '../values/global_variables.dart';
 import 'api_cancel_token_manager.dart';
 
 class ApiInterceptor extends Interceptor {

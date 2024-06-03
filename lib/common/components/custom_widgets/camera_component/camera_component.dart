@@ -1,11 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/common/route/route_service.dart';
-import 'package:flutter_boilerplate/common/theme/app_colors.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../services/loggy_service.dart';
-import '../../values/global_variables.dart';
-import '../app_widgets/dialogs/show_dialog.dart';
+import '../../../app_values/global_variables.dart';
+import '../../../services/loggy_service.dart';
+import '../../app_widgets/dialogs/show_dialog.dart';
 
 class CameraControllerWrapper {
   CameraControllerWrapper() {
@@ -180,7 +179,6 @@ class _CameraComponentState extends State<CameraComponent>
     return isInitializing
         ? Center(
       child: CircularProgressIndicator(
-        color: AppColors().primaryColorLight,
       ),
     )
         : widget.controllerWrapper.cameraController != null &&

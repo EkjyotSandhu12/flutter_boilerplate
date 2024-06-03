@@ -50,7 +50,7 @@ class CommonDialogUI extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   DesignMetrics().dialogRadius,
                 ),
-                color: AppColors().backgroundColor,
+                color: AppColors().getDialogBackgroundColor,
               ),
               height: makeHeightDynamic
                   ? null

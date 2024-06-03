@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../constants/app_strings.dart';
 import '../../theme/app_colors.dart';
 
 class BtnProperties {

@@ -31,7 +31,20 @@ class ApiService {
 
   ApiService._internal();
 
-  Future requestApi(
+  Future requestGetApi({
+    required String endPoint,
+  }) {
+    try {
+      return _requestApi(
+        endPoint: endPoint,
+        method: MethodType.get,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future _requestApi(
       {required MethodType method,
       required String endPoint,
       Map<String, dynamic>? data,
@@ -41,24 +54,25 @@ class ApiService {
     late Response response;
     try {
       response = await retry(
-        maxAttempts: 3,
-        () async => await DioClient().dio.request(
-              cancelToken: cancelToken,
-              _getURL(endPoint),
-              data: data,
-              options: Options(
-                method: method.type,
-                headers: header,
+          maxAttempts: 3,
+          () async => await DioClient().dio.request(
+                cancelToken: cancelToken,
+                _getURL(endPoint),
+                data: data,
+                options: Options(
+                  method: method.type,
+                  headers: header,
+                ),
               ),
-            ),
-        // Retry on SocketException or TimeoutException
+          // Retry on SocketException or TimeoutException
           retryIf: (e) {
-            log('ERROR retryIf ==> $e',);
-            return e is DioException &&
-                (e.type != DioExceptionType.cancel &&
-                    e.type != DioExceptionType.badResponse);
-          }
-      );
+        log(
+          'ERROR retryIf ==> $e',
+        );
+        return e is DioException &&
+            (e.type != DioExceptionType.cancel &&
+                e.type != DioExceptionType.badResponse);
+      });
       apiCancelRequestManager.removeTokenFromMap(endPoint, cancelToken);
 
       //this will only enter here is the status code is 2xx. else it will enter catch block
@@ -71,7 +85,7 @@ class ApiService {
     }
   }
 
- String _errorMessageHandler({error}) {
+  String _errorMessageHandler({error}) {
     String errorMessage;
     if (error is DioException) {
       errorMessage = NetworkErrorMessageHelper()
@@ -86,30 +100,24 @@ class ApiService {
 
   /// Returns full api url(Uri) using the Environment Variable
   String _getURL(String endPoint) {
-    if (kReleaseMode) {
-      Env envVar = ENV().currentEnv;
-      switch (envVar) {
-        case Env.production:
-          myLog.traceLog('PROD mode', topic: "Environment Mode");
-          myLog.setLogLevel(Level.error);
-          return "${ApiConstants.prod}$endPoint";
-        case Env.staging:
-          myLog.traceLog('STAGING mode', topic: "Environment Mode");
-          myLog.setLogLevel(Level.warning);
-          return ("${ApiConstants.staging}$endPoint");
-        case Env.local:
-          myLog.traceLog('LOCAL mode', topic: "Environment Mode");
-          myLog.setLogLevel(Level.all);
-          return ("${ApiConstants.local}$endPoint");
-        default:
-          myLog.traceLog('LOCAL mode', topic: "Environment Mode");
-          myLog.setLogLevel(Level.all);
-          return ("${ApiConstants.local}$endPoint");
-      }
-    } else {
-      myLog.traceLog('debug mode', topic: "Environment Mode");
-      Loggy().setLogLevel(Level.all);
-      return "${ApiConstants.local}$endPoint";
+    Env envVar = ENV().currentEnv;
+    switch (envVar) {
+      case Env.production:
+        myLog.traceLog('PROD mode', topic: "Environment Mode");
+        myLog.setLogLevel(Level.error);
+        return "${ApiConstants.prod}$endPoint";
+      case Env.staging:
+        myLog.traceLog('STAGING mode', topic: "Environment Mode");
+        myLog.setLogLevel(Level.warning);
+        return ("${ApiConstants.staging}$endPoint");
+      case Env.local:
+        myLog.traceLog('LOCAL mode', topic: "Environment Mode");
+        myLog.setLogLevel(Level.all);
+        return ("${ApiConstants.local}$endPoint");
+      default:
+        myLog.traceLog('LOCAL mode', topic: "Environment Mode");
+        myLog.setLogLevel(Level.all);
+        return ("${ApiConstants.local}$endPoint");
     }
   }
 }

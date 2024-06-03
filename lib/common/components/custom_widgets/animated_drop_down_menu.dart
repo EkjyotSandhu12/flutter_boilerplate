@@ -41,9 +41,7 @@ class _AnimatedSingleWidgetDropDownState
         AnimatedContainer(
           key: titleKey,
           decoration: BoxDecoration(
-            color: isOpened
-                ? AppColors().primaryColorLight.withGreen(170)
-                : AppColors().primaryColorLight,
+            color: Colors.red,
             borderRadius: BorderRadius.circular(8),
           ),
           duration: Duration(
