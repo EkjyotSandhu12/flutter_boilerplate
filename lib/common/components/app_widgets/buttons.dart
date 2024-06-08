@@ -27,11 +27,11 @@ class BtnElevated extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         minimumSize:btnProperties?.size,
         fixedSize: btnProperties?.size,
-        backgroundColor: AppColors().getButtonBackgroundColor,
+        backgroundColor: AppColors().getPrimaryColor,
       ),
       child: Text(
        buttonText ,
-        style: TextStyle(fontSize: btnProperties?.textSize, color: AppColors().getButtonTextColour),
+        style: TextStyle(fontSize: btnProperties?.textSize, color: AppColors().getOnPrimaryColor),
       ),
 
     );

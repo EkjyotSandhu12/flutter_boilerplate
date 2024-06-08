@@ -88,7 +88,7 @@ class MyInputTextField extends StatelessWidget {
         enableInteractiveSelection: true,
         readOnly: isReadOnly,
         enabled: enabled,
-        style: TextStyles().textFieldInputTextStyle,
+        style: TextStyles().getTextFieldInputTextStyle,
         maxLines: maxLines,
         minLines: minLines,
         textCapitalization: textCapitalization,

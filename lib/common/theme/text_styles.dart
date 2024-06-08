@@ -10,34 +10,32 @@ class TextStyles {
 
   AppColors appColors = AppColors();
 
-  ///==> TEXT STYLES GETTERS
-  //buttons
-  TextStyle get boldButtonTextStyle => _getF18TextStyle(fontWeight: FontWeight.w500);
+  ///==> COMMON TEXT STYLES GETTERS
 
   //input text field
-  TextStyle get textFieldErrorTextStyle => _getF12TextStyle(color: Colors.red);
-  TextStyle get textFieldInputTextStyle => _getF18TextStyle(fontWeight: FontWeight.w500, color: AppColors().getTextFieldBackgroundColor);
+  TextStyle get getTextFieldErrorTextStyle =>
+      getTextStyle(fontSize: 12, color: AppColors().getErrorColor);
+
+  TextStyle get getTextFieldInputTextStyle => getTextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      );
 
   //dialog
-  TextStyle get dialogTitleTextStyle => _getF18TextStyle(fontWeight: FontWeight.w500);
-  TextStyle get dialogBodyTextStyle => _getF15TextStyle(fontWeight: FontWeight.normal);
-  TextStyle get dialogBody2TextStyle => _getF18TextStyle(fontWeight: FontWeight.normal, color: Colors.white);
+  TextStyle get getDialogTitleTextStyle =>
+      getTextStyle(fontSize: 18, fontWeight: FontWeight.w500);
 
-  ///==> Text Styles
-  TextStyle _getF18TextStyle({Color? color, FontWeight? fontWeight}) {
-    return _getTextStyle(fontSize: 18, color: color, fontWeight: fontWeight);
-  }
-  TextStyle _getF15TextStyle({Color? color, FontWeight? fontWeight}) {
-    return _getTextStyle(fontSize: 15, color: color, fontWeight: fontWeight);
-  }
-  TextStyle _getF12TextStyle({Color? color, FontWeight? fontWeight}) {
-    return _getTextStyle(fontSize: 12, color: color, fontWeight: fontWeight);
-  }
+  TextStyle get getDialogBodyTextStyle =>
+      getTextStyle(fontSize: 15, fontWeight: FontWeight.normal);
 
-  _getTextStyle(
+  TextStyle get getDialogBody2TextStyle => getTextStyle(
+      fontSize: 18, fontWeight: FontWeight.normal, color: Colors.white);
+
+  ///==> Text Style
+  getTextStyle(
       {required double fontSize, Color? color, FontWeight? fontWeight}) {
     TextStyle temp = TextStyle(
-        color: color ?? appColors.getTextInputColor,
+        color: color ?? appColors.getPrimaryColor,
         fontSize: fontSize,
         fontWeight: fontWeight ?? FontWeight.normal);
     return temp;

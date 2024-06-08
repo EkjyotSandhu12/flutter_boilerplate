@@ -55,11 +55,11 @@ class ThemeDecorations {
           Text(hintText),
           Text(
             isRequired ? " *" : "",
-            style: textStyles.textFieldInputTextStyle,
+            style: textStyles.getTextFieldInputTextStyle,
           )
         ],
       ),
-      labelStyle: textStyles.textFieldInputTextStyle,
+      labelStyle: textStyles.getTextFieldInputTextStyle,
       isDense: true,
       contentPadding: EdgeInsets.only(
           left: prefix != null ? 0 : 20,
@@ -67,7 +67,7 @@ class ThemeDecorations {
           bottom: 15,
           right: suffixIcon != null ? 0 : 20),
       // contentPadding: EdgeInsets.all(5),
-      errorStyle: textStyles.textFieldErrorTextStyle,
+      errorStyle: textStyles.getTextFieldErrorTextStyle,
       enabledBorder: ThemeDecorations().inputBorder(),
       focusedBorder: ThemeDecorations().inputBorder(),
       disabledBorder: ThemeDecorations().inputBorder(),

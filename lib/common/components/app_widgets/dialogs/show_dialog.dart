@@ -17,7 +17,7 @@ class ShowDialog {
       CommonDialogUI(
         header: Text(
           title,
-          style: TextStyles().dialogTitleTextStyle,
+          style: TextStyles().getDialogTitleTextStyle,
           maxLines: 1,
         ),
         body: Container(
@@ -28,7 +28,7 @@ class ShowDialog {
           ),
           child: Text(
             bodyText,
-            style: TextStyles().dialogBodyTextStyle,
+            style: TextStyles().getDialogBodyTextStyle,
           ),
         ),
         footer: BtnElevated(

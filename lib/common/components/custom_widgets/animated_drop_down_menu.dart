@@ -84,7 +84,7 @@ class _AnimatedSingleWidgetDropDownState
                     duration: const Duration(milliseconds: 300),
                     child: Icon(
                       Icons.arrow_drop_down_circle,
-                      color: AppColors().getIconColor,
+                      color: AppColors().getPrimaryColor,
                     ),
                   )
                 ],

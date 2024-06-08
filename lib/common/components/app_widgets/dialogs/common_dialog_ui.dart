@@ -50,7 +50,7 @@ class CommonDialogUI extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   DesignMetrics().dialogRadius,
                 ),
-                color: AppColors().getDialogBackgroundColor,
+                color: AppColors().getPrimaryColor,
               ),
               height: makeHeightDynamic
                   ? null
@@ -109,7 +109,7 @@ class CommonDialogUI extends StatelessWidget {
                           icon: Icon(
                             shadows: [
                               BoxShadow(
-                                  color: AppColors().getIconColor,
+                                  color: AppColors().getPrimaryColor,
                                   blurRadius: 3,
                                   blurStyle: BlurStyle.outer,
                                   spreadRadius: 10)
@@ -118,7 +118,7 @@ class CommonDialogUI extends StatelessWidget {
                             weight: 100,
                             grade: 100,
                             opticalSize: 100,
-                            color: AppColors().getIconColor,
+                            color: AppColors().getPrimaryColor,
                           ),
                         ),
                       ),

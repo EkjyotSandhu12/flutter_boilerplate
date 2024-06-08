@@ -33,28 +33,28 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
+  cupertino_icons: ^1.0.8
   retry: ^3.1.2
-  responsive_framework: 1.1.1
-  path_provider: ^2.1.2
-  dio: ^5.4.1
-  get_secure_storage: ^1.0.4
+  responsive_framework: ^1.4.0
+  path_provider: ^2.1.3
+  dio: ^5.4.3+1
+  get_secure_storage: ^1.0.5
   flutter_svg: ^2.0.10+1
-  logger: ^2.1.0
-  auto_route: ^7.9.2
-  camera: ^0.10.5+9
+  logger: ^2.3.0
+  auto_route: ^8.1.3
+  camera: ^0.11.0+1
   intl: ^0.19.0
   #go through permission_handler docs
-  permission_handler: ^11.3.0
+  permission_handler: ^11.3.1
   flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.3.10
-  package_rename: ^1.5.3
-  auto_route_generator: ^7.3.2
+  flutter_native_splash: ^2.4.0
+  package_rename: ^1.6.0
+  auto_route_generator: ^8.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
