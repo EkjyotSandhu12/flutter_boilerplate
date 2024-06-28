@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../../theme/design_metrics.dart';
 import '../../../theme/text_styles.dart';
 import '../buttons.dart';
 import 'common_dialog_ui.dart';
 
 class ShowDialog {
   showSimpleDialog(
-      BuildContext context, {
-        required String title,
-        required String bodyText,
-        required String buttonText,
-        required Function onButtonTap,
-      }) async {
+    BuildContext context, {
+    required String title,
+    required String bodyText,
+    required String buttonText,
+    required Function onButtonTap,
+  }) async {
     return await _commonShowDialog(
       context,
       CommonDialogUI(
@@ -22,10 +21,6 @@ class ShowDialog {
         ),
         body: Container(
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius:
-            BorderRadius.circular(DesignMetrics().commonContainerRadius12),
-          ),
           child: Text(
             bodyText,
             style: TextStyles().getDialogBodyTextStyle,
@@ -35,7 +30,8 @@ class ShowDialog {
           onTap: () {
             onButtonTap();
           },
-          buttonText: buttonText,),
+          buttonText: buttonText,
+        ),
       ),
     );
   }

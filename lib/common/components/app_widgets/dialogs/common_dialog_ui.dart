@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../route/route_service.dart';
+
+import '../../../route/go_router/route_service.dart';
 import '../../../services/reponsive_framework_service.dart';
 import '../../../theme/app_colors.dart';
-import '../../../theme/design_metrics.dart';
 import '../../../utils/screen_utils.dart';
 
 //Very simple dialog, which have fixed width and height, and like showing information, error, and so on.
+
+
 
 class CommonDialogUI extends StatelessWidget {
   CommonDialogUI({
@@ -33,6 +35,18 @@ class CommonDialogUI extends StatelessWidget {
   Alignment bodyAlignment;
   bool disableBodyAlignment;
 
+
+
+  double get dialogTitleBodyGap => 12;
+  double get dialogBodyFooterGap => 12;
+  double get dialogPaddingVer => 22;
+  double get dialogPaddingHor => 22;
+  double get dialogHeight => 330;
+  double get dialogWidth => 300;
+  double get commonContainerRadius12 => (12);
+  double get dialogRadius => (12);
+
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveFrameworkService().globalResponsive(
@@ -48,23 +62,23 @@ class CommonDialogUI extends StatelessWidget {
                   bottom: ScreenUtils.viewInsetsBottom(context)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
-                  DesignMetrics().dialogRadius,
+                  dialogRadius,
                 ),
                 color: AppColors().getPrimaryColor,
               ),
               height: makeHeightDynamic
                   ? null
-                  : height ?? DesignMetrics().dialogHeight,
-              width: width ?? DesignMetrics().dialogWidth,
+                  : height ??dialogHeight,
+              width: width ?? dialogWidth,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: DesignMetrics().dialogPaddingVer,
-                      bottom: DesignMetrics().dialogPaddingVer,
-                      left: horPadding ?? DesignMetrics().dialogPaddingHor,
-                      right: horPadding ?? DesignMetrics().dialogPaddingHor,
+                      top: dialogPaddingVer,
+                      bottom:dialogPaddingVer,
+                      left: horPadding ??dialogPaddingHor,
+                      right: horPadding ??dialogPaddingHor,
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -73,7 +87,7 @@ class CommonDialogUI extends StatelessWidget {
                       children: [
                         header,
                         SizedBox(
-                          height: DesignMetrics().dialogTitleBodyGap,
+                          height: dialogTitleBodyGap,
                         ),
                         makeHeightDynamic
                             ? Flexible(child: body)
@@ -89,7 +103,7 @@ class CommonDialogUI extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               SizedBox(
-                                height: DesignMetrics().dialogBodyFooterGap,
+                                height: dialogBodyFooterGap,
                               ),
                               footer!,
                             ],
