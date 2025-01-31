@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import '../services/loggy_service.dart';
-import '../utils/screen_utils.dart';
-import '../utils/utils.dart';
+import '../../../services/loggy_service.dart';
+import '../../../utils/screen_utils.dart';
+import '../../../utils/utils.dart';
 
 class ValidatorConfig {
   List<ValidatorType>?

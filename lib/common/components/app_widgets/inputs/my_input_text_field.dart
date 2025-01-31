@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../helpers/input_validators.dart';
+import 'input_validators.dart';
 import '../../../theme/text_styles.dart';
 import '../../../utils/utils.dart';
 
@@ -66,9 +66,9 @@ class MyInputTextField extends StatelessWidget {
       alignLabelWithHint: true,
       filled: true,
       fillColor: Colors.white,
-      labelStyle: TextStyles().getTextFieldInputTextStyle,
+      labelStyle: TextStyles().labelMedium,
       isDense: true,
-      errorStyle: TextStyles().getTextFieldErrorTextStyle,
+      errorStyle: TextStyles().labelMedium,
       enabledBorder: inputBorder(),
       focusedBorder: inputBorder(),
       disabledBorder: inputBorder(),
@@ -86,7 +86,7 @@ class MyInputTextField extends StatelessWidget {
       enableInteractiveSelection: true,
       readOnly: isReadOnly,
       enabled: enabled,
-      style: TextStyles().getTextFieldInputTextStyle,
+      style: TextStyles().labelMedium,
       maxLines: maxLines,
       minLines: minLines,
       textCapitalization: textCapitalization,

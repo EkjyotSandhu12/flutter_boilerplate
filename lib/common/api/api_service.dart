@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:retry/retry.dart';
 import '../../env.dart';
 import '../common_dtos/reponse_dto.dart';
-import '../helpers/network_error_message_helper.dart';
+import 'network_error_message_helper.dart';
 import '../services/loggy_service.dart';
 import 'api_cancel_token_manager.dart';
 import 'api_constants.dart';
@@ -33,17 +33,12 @@ class ApiService {
 
   Future requestGetApi({
     required String endPoint,
-  }) {
-    try {
-      return _requestApi(
-        endPoint: endPoint,
-        method: MethodType.get,
-      );
-    } catch (e) {
-      rethrow;
-    }
+  }) async {
+    return await _requestApi(
+      endPoint: endPoint,
+      method: MethodType.get,
+    );
   }
-
   Future _requestApi(
       {required MethodType method,
       required String endPoint,

@@ -16,14 +16,14 @@ class ShowDialog {
       CommonDialogUI(
         header: Text(
           title,
-          style: TextStyles().getDialogTitleTextStyle,
+          style: TextStyles().labelMedium,
           maxLines: 1,
         ),
         body: Container(
           clipBehavior: Clip.antiAlias,
           child: Text(
             bodyText,
-            style: TextStyles().getDialogBodyTextStyle,
+            style: TextStyles().labelMedium,
           ),
         ),
         footer: BtnElevated(
